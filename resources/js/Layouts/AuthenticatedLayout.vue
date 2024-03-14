@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <nav class="bg-gray-800 h-16 p-4 flex justify-between">
+    <nav class="bg-gray-800 h-16 p-4 flex justify-between border-b border-b-white">
         <div class="flex gap-4">
             <Link :href="route('dashboard')">
                 <ApplicationLogo

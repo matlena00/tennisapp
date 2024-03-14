@@ -37,7 +37,13 @@ import {Link} from "@inertiajs/vue3";
                 Powiadomienia
             </Link>
             <Link
-                href="#"
+                href="/courts"
+                class="text-white rounded-md hover:bg-gray-700 p-2"
+            >
+                Zarządzaj kortami
+            </Link>
+            <Link
+                href="/profile"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >
                 Profil
