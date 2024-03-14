@@ -7,7 +7,7 @@ import {Link} from "@inertiajs/vue3";
     <aside class="w-[256px] fixed left-0 h-full bg-gray-800">
         <div class="flex flex-col gap-y-2 mt-4 px-4">
             <Link
-                href="#"
+                href="/dashboard"
                 class="text-white rounded-md hover:bg-gray-700 p-2 mt-4"
             >
                 Dashboard

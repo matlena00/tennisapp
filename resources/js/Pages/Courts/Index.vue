@@ -12,19 +12,19 @@ const props = defineProps({
 <template>
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
-    <div class="ml-[256px] p-4">
-        <h1 class="mb-8 text-3xl font-bold">Contacts</h1>
-        <div class="flex items-center justify-end mb-6">
-            <Link class="btn-indigo" href="/courts/create">
-                <span>Create</span>
-                <span class="hidden md:inline">&nbsp;Court</span>
+    <div class="ml-[256px] p-8 bg-gray-100 h-[calc(100vh-64px)]">
+        <h1 class="mb-8 text-3xl font-bold">Wszystkie Korty</h1>
+        <div class="max-w-6xl flex items-center justify-end mb-6">
+            <Link class="p-4 bg-gray-800 text-white rounded-md" href="/courts/create">
+                <span>Stwórz</span>
+                <span class="hidden md:inline">&nbsp;nowy</span>
             </Link>
         </div>
-        <table class="w-full whitespace-nowrap">
+        <table class="max-w-6xl w-full whitespace-nowrap bg-white rounded-md">
             <tr class="text-left font-bold">
                 <th class="pb-4 pt-6 px-6">Nazwa</th>
                 <th class="pb-4 pt-6 px-6">Opis</th>
-                <th class="pb-4 pt-6 px-6">Nawierzchnia</th>
+                <th class="pb-4 pt-6 px-6" colspan="2">Nawierzchnia</th>
             </tr>
             <tr v-for="court in courts"
                 class="p-4 m-4 hover:bg-gray-100">
@@ -41,13 +41,19 @@ const props = defineProps({
                             {{ court.description }}
                         </div>
                     </Link>
-                </td><td>
-                <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/courts/${court.id}/edit`">
-                    <div v-if="court.surface">
-                        {{ court.surface }}
-                    </div>
-                </Link>
-            </td>
+                </td>
+                <td>
+                    <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/courts/${court.id}/edit`">
+                        <div v-if="court.surface">
+                            {{ court.surface }}
+                        </div>
+                    </Link>
+                </td>
+                <td>
+                    <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/courts/${court.id}/edit`">
+                        <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+                    </Link>
+                </td>
             </tr>
         </table>
     </div>
