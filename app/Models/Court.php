@@ -13,6 +13,8 @@ class Court extends Model
         'name',
         'description',
         'surface',
-        'available'
+        'available',
+        'opening_time',
+        'closing_time'
     ];
 }

@@ -1,7 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
-import {router} from "@inertiajs/vue3";
 import {defineProps, reactive} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 
@@ -13,7 +12,8 @@ const form = reactive({
     ...props.court
 });
 const updateCourt = () => {
-    Inertia.put(`/courts/${form.id}`, form)
+    console.log(form);
+    Inertia.put(`/courts/${form.id}`, form);
 }
 
 const deleteCourt = () => {
@@ -32,6 +32,8 @@ const deleteCourt = () => {
             <div class="flex flex-col gap-2 p-8">
                 <input v-model="form.name" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Name" />
                 <input v-model="form.description" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Description" />
+                <input v-model="form.opening_time" type="time" label="Opening Time">
+                <input v-model="form.closing_time" type="time" label="Closing Time">
                 <select v-model="form.surface" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Surface">
                     <option value="hard">Twarda</option>
                     <option value="grass">Trawiasta</option>

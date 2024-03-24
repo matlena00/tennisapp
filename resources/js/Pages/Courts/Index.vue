@@ -25,6 +25,8 @@ const props = defineProps({
                 <th class="pb-4 pt-6 px-6">Nazwa</th>
                 <th class="pb-4 pt-6 px-6">Opis</th>
                 <th class="pb-4 pt-6 px-6" colspan="2">Nawierzchnia</th>
+                <th class="pb-4 pt-6 px-6" colspan="2">Godzina otwarcia</th>
+                <th class="pb-4 pt-6 px-6" colspan="2">Godzina zamknięcia</th>
             </tr>
             <tr v-for="court in courts"
                 class="p-4 m-4 hover:bg-gray-100">
@@ -51,9 +53,19 @@ const props = defineProps({
                 </td>
                 <td>
                     <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/courts/${court.id}/edit`">
-                        icon
+                        <div v-if="court.opening_time">
+                            {{ court.opening_time }}
+                        </div>
                     </Link>
                 </td>
+                <td>
+                    <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/courts/${court.id}/edit`">
+                        <div v-if="court.closing_time">
+                            {{ court.closing_time }}
+                        </div>
+                    </Link>
+                </td>
+
             </tr>
         </table>
     </div>
