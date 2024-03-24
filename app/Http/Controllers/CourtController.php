@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Court;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class CourtController extends Controller
@@ -15,7 +16,9 @@ class CourtController extends Controller
 
     public function create()
     {
-        return Inertia::render('Courts/Create');
+        return Inertia::render('Courts/Create', [
+            'isAdmin' => Gate::allows('isAdmin')
+        ]);
     }
 
     public function store(Request $request)
@@ -45,8 +48,8 @@ class CourtController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'location' => 'required',
             'description' => 'sometimes|max:1000',
+            'surface' => 'required'
         ]);
 
         $court->update($validatedData);

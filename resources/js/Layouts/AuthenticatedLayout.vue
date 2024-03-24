@@ -18,7 +18,7 @@ const showingNavigationDropdown = ref(false);
                     class="block h-9 w-auto fill-current text-white"
                 />
             </Link>
-            <p class="text-white">tennisapp</p>
+            <p class="text-white">tenisso</p>
         </div>
         <div>
             <Dropdown align="right" width="48">

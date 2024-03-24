@@ -1,13 +1,48 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
+import {router} from "@inertiajs/vue3";
+import {defineProps, reactive} from "vue";
+import {Inertia} from "@inertiajs/inertia";
+
+const props = defineProps({
+    court: Object,
+});
+
+const form = reactive({
+    ...props.court
+});
+const updateCourt = () => {
+    Inertia.put(`/courts/${form.id}`, form)
+}
+
+const deleteCourt = () => {
+    if (confirm("Czy na pewno chcesz usunąć kort?")) {
+        Inertia.delete(`/courts/${form.id}`);
+    }
+}
 </script>
 
 <template>
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
-    <div class="ml-[256px] p-8 bg-gray-100 h-[calc(100vh-64px)]">
-        <h1 class="mb-8 text-3xl font-bold">Edycja kortu</h1>
+    <div class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
+        <h2 class="mb-8 text-3xl font-bold">Edycja kortu</h2>
+        <form @submit.prevent="updateCourt" class="max-w-6xl p-4 bg-white rounded-md">
+            <div class="flex flex-col gap-2 p-8">
+                <input v-model="form.name" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Name" />
+                <input v-model="form.description" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Description" />
+                <select v-model="form.surface" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Surface">
+                    <option value="hard">Twarda</option>
+                    <option value="grass">Trawiasta</option>
+                    <option value="clay">Mączka</option>
+                </select>
+                <div class="flex justify-between">
+                    <button class="mt-4 bg-white border-2 text-red-600 border-white w-fit  py-2 px-4 rounded-lg hover:underline" @click="deleteCourt()">Usuń</button>
+                    <button class="mt-4 bg-gray-800 border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-green-500">Aktualizuj kort</button>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 

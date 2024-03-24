@@ -12,10 +12,10 @@ const props = defineProps({
 <template>
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
-    <div class="ml-[256px] p-8 bg-gray-100 h-[calc(100vh-64px)]">
+    <div class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
         <h1 class="mb-8 text-3xl font-bold">Wszystkie Korty</h1>
         <div class="max-w-6xl flex items-center justify-end mb-6">
-            <Link class="p-4 bg-gray-800 text-white rounded-md" href="/courts/create">
+            <Link class="px-6 py-3 bg-gray-800 text-white rounded-md" href="/courts/create">
                 <span>Stwórz</span>
                 <span class="hidden md:inline">&nbsp;nowy</span>
             </Link>
@@ -51,7 +51,7 @@ const props = defineProps({
                 </td>
                 <td>
                     <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/courts/${court.id}/edit`">
-                        <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
+                        icon
                     </Link>
                 </td>
             </tr>

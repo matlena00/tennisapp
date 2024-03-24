@@ -1,5 +1,4 @@
 <script setup>
-
 import {Link} from "@inertiajs/vue3";
 </script>
 
@@ -37,6 +36,7 @@ import {Link} from "@inertiajs/vue3";
                 Powiadomienia
             </Link>
             <Link
+                v-if="$page.props.auth.user.role == 'admin'"
                 href="/courts"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >

@@ -26,27 +26,46 @@ Route::get('/', function () {
     ]);
 })->middleware('auth');
 
+// Routing used only by admin
+Route::middleware('can:isAdmin')->group(function () {
+    // Courts
+    Route::get('/courts', [CourtController::class, 'index'])
+        ->name('courts.index');
+
+    Route::get('/courts/create', [CourtController::class, 'create'])
+        ->name('courts.create');
+
+    Route::post('/courts', [CourtController::class, 'store'])
+        ->name('courts.store');
+
+    Route::get('/courts/{court}', [CourtController::class, 'show'])
+        ->name('courts.show');
+
+    Route::get('/courts/{court}/edit', [CourtController::class, 'edit'])
+        ->name('courts.edit');
+
+    Route::put('/courts/{court}', [CourtController::class, 'update'])
+        ->name('courts.update');
+
+    Route::delete('/courts/{court}', [CourtController::class, 'destroy'])
+        ->name('courts.destroy');
+});
+
+// Profile
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+});
+
+// Dashboard
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-// Courts
-Route::get('/courts', [CourtController::class, 'index'])->name('courts.index');
-
-Route::get('/courts/create', [CourtController::class, 'create'])->name('courts.create');
-Route::post('/courts', [CourtController::class, 'store'])->name('courts.store');
-
-Route::get('/courts/{court}', [CourtController::class, 'show'])->name('courts.show');
-
-Route::get('/courts/{court}/edit', [CourtController::class, 'edit'])->name('courts.edit');
-Route::put('/courts/{court}', [CourtController::class, 'update'])->name('courts.update');
-
-Route::delete('/courts/{court}', [CourtController::class, 'destroy'])->name('courts.destroy');
 
 require __DIR__.'/auth.php';
