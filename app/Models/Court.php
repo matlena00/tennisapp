@@ -17,4 +17,9 @@ class Court extends Model
         'opening_time',
         'closing_time'
     ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

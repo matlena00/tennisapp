@@ -12,35 +12,46 @@ import {Link} from "@inertiajs/vue3";
                 Dashboard
             </Link>
             <Link
-                href="#"
+                v-if="$page.props.auth.user.role == 'user'"
+                href="/reservations/index"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >
                 Rezerwuj kort
             </Link>
             <Link
+                v-if="$page.props.auth.user.role == 'user'"
                 href="#"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >
                 Wypożycz sprzęt
             </Link>
             <Link
+                v-if="$page.props.auth.user.role == 'user'"
                 href="#"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >
                 Moje rezerwacje
             </Link>
             <Link
-                href="#"
+                v-if="$page.props.auth.user.role == 'admin'"
+                href="/reservations"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >
-                Powiadomienia
+                Rezerwacje
             </Link>
             <Link
                 v-if="$page.props.auth.user.role == 'admin'"
                 href="/courts"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >
-                Zarządzaj kortami
+                Korty
+            </Link>
+            <Link
+                v-if="$page.props.auth.user.role == 'admin'"
+                href="/users"
+                class="text-white rounded-md hover:bg-gray-700 p-2"
+            >
+                Użytkownicy
             </Link>
             <Link
                 href="/profile"

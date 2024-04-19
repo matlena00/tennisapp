@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -28,6 +29,11 @@ Route::get('/', function () {
 
 // Routing used only by admin
 Route::middleware('can:isAdmin')->group(function () {
+    // Reservations
+    Route::get('/reservations', [ReservationController::class, 'index'])
+        ->name('reservations.index');
+
+
     // Courts
     Route::get('/courts', [CourtController::class, 'index'])
         ->name('courts.index');
@@ -49,6 +55,19 @@ Route::middleware('can:isAdmin')->group(function () {
 
     Route::delete('/courts/{court}', [CourtController::class, 'destroy'])
         ->name('courts.destroy');
+});
+
+Route::middleware('can:isUser')->group(function () {
+    // Reservations
+    Route::get('/reservations/index', [ReservationController::class, 'index'])
+        ->name('reservations.index');
+
+    Route::get('/reserve/{court}', [ReservationController::class, 'create'])->name('reservations.create');
+
+
+    // Courts
+    Route::get('/courts/{court}/availability', [CourtController::class, 'generateAvailableSlots'])
+        ->name('court.availability');
 });
 
 // Profile

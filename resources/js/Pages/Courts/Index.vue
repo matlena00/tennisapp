@@ -24,9 +24,9 @@ const props = defineProps({
             <tr class="text-left font-bold">
                 <th class="pb-4 pt-6 px-6">Nazwa</th>
                 <th class="pb-4 pt-6 px-6">Opis</th>
-                <th class="pb-4 pt-6 px-6" colspan="2">Nawierzchnia</th>
-                <th class="pb-4 pt-6 px-6" colspan="2">Godzina otwarcia</th>
-                <th class="pb-4 pt-6 px-6" colspan="2">Godzina zamknięcia</th>
+                <th class="pb-4 pt-6 px-6">Nawierzchnia</th>
+                <th class="pb-4 pt-6 px-6">Godzina otwarcia</th>
+                <th class="pb-4 pt-6 px-6">Godzina zamknięcia</th>
             </tr>
             <tr v-for="court in courts"
                 class="p-4 m-4 hover:bg-gray-100">
