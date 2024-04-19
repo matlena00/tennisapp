@@ -26,7 +26,7 @@ const deleteCourt = () => {
 <template>
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
-    <div class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
+    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
         <h2 class="mb-8 text-3xl font-bold">Edycja kortu</h2>
         <form @submit.prevent="updateCourt" class="max-w-6xl p-4 bg-white rounded-md">
             <div class="flex flex-col gap-2 p-8">
@@ -45,7 +45,7 @@ const deleteCourt = () => {
                 </div>
             </div>
         </form>
-    </div>
+    </main>
 </template>
 
 <style scoped>

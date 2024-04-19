@@ -68,10 +68,10 @@ const calendarOptions = {
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
 
-    <div class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
+    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
         <h1 class="mb-8 text-3xl font-bold">Wybierz godzinę rezerwacji z dostępnych slotów</h1>
         <FullCalendar :options="calendarOptions" />
-    </div>
+    </main>
 </template>
 
 <style scoped>

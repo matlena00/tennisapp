@@ -29,7 +29,7 @@ defineProps({
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
 
-    <div class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 w-auto h-[calc(100vh-64px)]">
+    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 w-auto h-[calc(100vh-64px)]">
         <h2 class="mb-8 text-3xl text-gray-800 font-bold">Dodaj nowy kort</h2>
         <form @submit.prevent="createCourt" class="max-w-6xl p-4 bg-white rounded-md">
             <div class="flex flex-col gap-2 p-8">
@@ -45,7 +45,7 @@ defineProps({
                 <button class="mt-4 bg-gray-800 border-2 text-white border-white w-fit mx-auto py-2 px-4 rounded-lg">Dodaj kort</button>
             </div>
         </form>
-    </div>
+    </main>
 </template>
 
 <style scoped>
