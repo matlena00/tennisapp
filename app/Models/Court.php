@@ -13,6 +13,7 @@ class Court extends Model
         'name',
         'description',
         'surface',
+        'hourly_rate',
         'available',
         'opening_time',
         'closing_time'

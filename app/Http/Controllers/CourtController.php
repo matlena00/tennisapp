@@ -29,6 +29,7 @@ class CourtController extends Controller
             'name' => 'required|max:255',
             'description' => 'sometimes|max:1000',
             'surface' => 'required',
+            'hourly_rate' => 'required',
             'opening_time' => 'required|date_format:H:i',
             'closing_time' => 'required|date_format:H:i|after:opening_time'
         ]);
@@ -54,6 +55,7 @@ class CourtController extends Controller
             'name' => 'required|max:255',
             'description' => 'sometimes|max:1000',
             'surface' => 'required',
+            'hourly_rate' => 'required',
             'opening_time' => 'required',
             'closing_time' => 'required'
         ]);
