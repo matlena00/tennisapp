@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
+import MainContent from "@/Components/MainContent.vue";
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -68,10 +69,10 @@ const calendarOptions = {
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
 
-    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
+    <MainContent>
         <h1 class="mb-8 text-3xl font-bold">Wybierz godzinę rezerwacji z dostępnych slotów</h1>
         <FullCalendar :options="calendarOptions" />
-    </main>
+    </MainContent>
 </template>
 
 <style scoped>

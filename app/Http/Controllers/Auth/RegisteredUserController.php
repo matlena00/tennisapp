@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Send the welcome email
-        Mail::to($user->email)->send(new AccountCreatedMailable());
+        Mail::to($user->email)->send(new AccountCreatedMailable($user));
 
         return redirect(RouteServiceProvider::HOME);
     }

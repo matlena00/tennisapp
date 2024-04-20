@@ -2,7 +2,7 @@
 import { defineProps } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
-import {Link} from "@inertiajs/vue3";
+import {Head, Link} from "@inertiajs/vue3";
 
 const props = defineProps({
     courts: Array,
@@ -10,9 +10,10 @@ const props = defineProps({
 </script>
 
 <template>
+    <Head title="Rezerwacja kortu" />
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
-    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
+    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-700 text-white h-[calc(100vh-64px)]">
         <h1 class="mb-8 text-3xl font-bold">Rezerwuj swój ulubiony kort!</h1>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 gap-8 lg:grid-cols-3">
             <div v-for="court in courts" :key="court.id">

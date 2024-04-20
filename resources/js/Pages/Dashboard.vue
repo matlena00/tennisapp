@@ -1,15 +1,16 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from '@/Layouts/Aside.vue';
+import MainContent from "@/Components/MainContent.vue";
 import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
     <Head title="Dashboard" />
-
     <AuthenticatedLayout></AuthenticatedLayout>
     <Aside></Aside>
-    <main class="ml-[256px] md:p-6 lg:p-12 bg-gray-100 h-[calc(100vh-64px)]">
+
+    <MainContent>
         <div class="grid sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-3">
             <div class="flex bg-green-400">
                 test
@@ -18,5 +19,5 @@ import { Head } from '@inertiajs/vue3';
                 test 2
             </div>
         </div>
-    </main>
+    </MainContent>
 </template>

@@ -36,9 +36,9 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Zaktualizuj hasło</h2>
+            <h2 class="text-lg font-medium text-white">Zaktualizuj hasło</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-1 text-sm text-white">
                 Upewnij się, że nowe hasło będzie bezpieczne
             </p>
         </header>

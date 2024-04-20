@@ -40,9 +40,9 @@ const closeModal = () => {
 <template>
     <section class="space-y-6">
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Usuń konto</h2>
+            <h2 class="text-lg font-medium text-white">Usuń konto</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-1 text-sm text-white">
                 Po usunięciu Twojego konta wszystkie jego zasoby i dane zostaną trwale usunięte. Przed usunięciem konta prosimy o pobranie wszelkich danych lub informacji, które chcesz zachować.
             </p>
         </header>
@@ -51,7 +51,7 @@ const closeModal = () => {
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
-                <h2 class="text-lg font-medium text-gray-900">
+                <h2 class="text-lg font-medium text-white">
                     Are you sure you want to delete your account?
                 </h2>
 

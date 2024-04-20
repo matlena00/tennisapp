@@ -25,9 +25,9 @@ const form = useForm({
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Twoje dane</h2>
+            <h2 class="text-lg font-medium text-white">Twoje dane</h2>
 
-            <p class="mt-1 text-sm text-gray-600">
+            <p class="mt-1 text-sm text-white">
                 Zaktualizuj swoje dane
             </p>
         </header>
@@ -65,7 +65,7 @@ const form = useForm({
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="text-sm mt-2 text-gray-800">
+                <p class="text-sm mt-2 text-white">
                     Your email address is unverified.
                     <Link
                         :href="route('verification.send')"

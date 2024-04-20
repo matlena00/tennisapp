@@ -14,11 +14,11 @@ use App\Models\User;
 class AccountCreatedMailable extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
+    public User $user;
     /**
      * Create a new message instance.
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }
