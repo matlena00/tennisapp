@@ -69,8 +69,6 @@ const props = defineProps({
             </tr>
         </table>
     </MainContent>
-
-
 </template>
 
 <style scoped>

@@ -64,10 +64,12 @@ Route::middleware('can:isUser')->group(function () {
 
     Route::get('/reserve/{court}', [ReservationController::class, 'create'])->name('reservations.create');
 
-
     // Courts
     Route::get('/courts/{court}/availability', [CourtController::class, 'generateAvailableSlots'])
         ->name('court.availability');
+
+    Route::get('/courts/{court}/slots', [CourtController::class, 'slots'])
+        ->name('courts.slots');
 });
 
 // Profile

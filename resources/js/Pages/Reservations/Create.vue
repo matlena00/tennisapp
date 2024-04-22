@@ -1,4 +1,6 @@
 <script setup>
+import { defineProps, onMounted } from 'vue';
+import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
 import MainContent from "@/Components/MainContent.vue";
@@ -6,12 +8,31 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction';
+import moment from 'moment';
 
-defineProps({
+const props = defineProps({
     court: Array,
 })
 
 const today = new Date().toISOString().slice(0, 10);
+
+const calculateDuration = (start, end) => {
+    const startDate = moment(start);
+    const endDate = moment(end);
+    const duration = moment.duration(endDate.diff(startDate));
+    return duration.asHours();
+}
+
+const showAvailableSlots = () => {
+    axios.get(`/courts/${props.court.id}/slots`)
+        .then(response => {
+            console.log(response);
+        })
+}
+const showReservationModal = (x,y) => {
+    alert(x)
+}
+
 const calendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridWeek',
@@ -46,6 +67,8 @@ const calendarOptions = {
         { title: 'Rezerwacja', start: '2024-04-25T15:00:00', end: '2024-04-25T17:00:00' },
         { title: 'Rezerwacja', start: '2024-04-25T18:00:00', end: '2024-04-25T20:00:00' }
     ],
+    locale: 'pl',
+    timeZone: 'Europe/Warsaw',
     allDaySlot: false,
     firstDay: 1,
     initialDate: today,
@@ -58,11 +81,19 @@ const calendarOptions = {
         hour12: false
         },
     selectable: true,
-    dateClick: function(info) {
-        alert('Clicked on: ' + info.dateStr);
-        console.log(info)
-    },
+    select: function(info) {
+        const duration = calculateDuration(info.start, info.end);
+        if (duration > 14) {
+            alert('Nie można zarezerwować kortów na więcej niż 1 dzień');
+            return;
+        }
+        showReservationModal(info.start, info.end);
+    }
 };
+
+onMounted(() => {
+    showAvailableSlots();
+});
 </script>
 
 <template>

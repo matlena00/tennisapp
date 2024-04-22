@@ -72,9 +72,9 @@ class CourtController extends Controller
         return redirect()->route('courts.index');
     }
 
-    public function availableSlots(Request $request, Court $court)
+    public function slots(Request $request, Court $court)
     {
-
+        $reservations =
     }
 
     function generateAvailableSlots() {
