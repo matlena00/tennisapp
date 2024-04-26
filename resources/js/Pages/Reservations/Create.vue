@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import {defineProps, onMounted, ref, watch} from 'vue';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
@@ -26,47 +26,31 @@ const calculateDuration = (start, end) => {
 const showAvailableSlots = () => {
     axios.get(`/courts/${props.court.id}/slots`)
         .then(response => {
-            console.log(response);
+            if (response.data) {
+                events.value = response.data;
+            }
         })
+        .catch(error => {
+            console.error('Error fetching available slots:', error);
+        });
 }
 const showReservationModal = (x,y) => {
-    alert(x)
+    //alert(x)
 }
 
-const calendarOptions = {
+const events = ref([]);
+
+const reservationConfirmation = (clickInfo) => {
+    const { startStr: start, endStr: end } = clickInfo.event;
+    const courtId = props.court.id;
+
+    window.location.href = `/reservation/confirm/${courtId}/${start}/${end}`;
+}
+
+const calendarOptions = ref({
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'timeGridWeek',
-    events: [
-        // Example events
-        { title: 'Rezerwacja', start: '2024-04-19T09:00:00', end: '2024-04-19T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-19T12:00:00', end: '2024-04-19T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-19T15:00:00', end: '2024-04-19T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-19T18:00:00', end: '2024-04-19T20:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-20T09:00:00', end: '2024-04-20T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-20T12:00:00', end: '2024-04-20T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-20T15:00:00', end: '2024-04-20T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-20T18:00:00', end: '2024-04-20T20:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-21T09:00:00', end: '2024-04-21T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-21T12:00:00', end: '2024-04-21T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-21T15:00:00', end: '2024-04-21T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-21T18:00:00', end: '2024-04-21T20:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-22T09:00:00', end: '2024-04-22T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-22T12:00:00', end: '2024-04-22T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-22T15:00:00', end: '2024-04-22T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-22T18:00:00', end: '2024-04-22T20:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-23T09:00:00', end: '2024-04-23T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-23T12:00:00', end: '2024-04-23T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-23T15:00:00', end: '2024-04-23T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-23T18:00:00', end: '2024-04-23T20:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-24T09:00:00', end: '2024-04-24T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-24T12:00:00', end: '2024-04-24T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-24T15:00:00', end: '2024-04-24T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-24T18:00:00', end: '2024-04-24T20:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-25T09:00:00', end: '2024-04-25T11:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-25T12:00:00', end: '2024-04-25T14:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-25T15:00:00', end: '2024-04-25T17:00:00' },
-        { title: 'Rezerwacja', start: '2024-04-25T18:00:00', end: '2024-04-25T20:00:00' }
-    ],
+    events: events.value,
     locale: 'pl',
     timeZone: 'Europe/Warsaw',
     allDaySlot: false,
@@ -79,17 +63,18 @@ const calendarOptions = {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-        },
+    },
+
     selectable: true,
-    select: function(info) {
-        const duration = calculateDuration(info.start, info.end);
-        if (duration > 14) {
-            alert('Nie można zarezerwować kortów na więcej niż 1 dzień');
-            return;
-        }
-        showReservationModal(info.start, info.end);
+    eventClick: function(clickInfo) {
+        reservationConfirmation(clickInfo);
+        console.log(clickInfo.event._instance.range);
     }
-};
+});
+
+watch(events, (newEvents) => {
+    calendarOptions.value.events = newEvents;
+}, { deep: true });
 
 onMounted(() => {
     showAvailableSlots();

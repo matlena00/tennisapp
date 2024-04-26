@@ -25,4 +25,28 @@ class ReservationController extends Controller
             'court' => $court_id
         ]);
     }
+
+    public function confirm($court_id, $start, $end) {
+        $court = Court::findOrFail($court_id);
+
+        return Inertia::render('Reservations/Confirm', [
+            'court' => $court,
+            'start_time' => $start,
+            'end_time' => $end
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'court_id' => 'required|integer|exists:courts,id',
+            'user_id' => 'required|integer|exists:users,id',
+            'start_time' => 'required|date_format:Y-m-d H:i:s',
+            'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time'
+        ]);
+
+        $reservation = Reservation::create($validatedData);
+
+        return response()->json(['message' => 'Reservation successful', 'data' => $reservation], 200);
+    }
 }

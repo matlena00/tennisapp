@@ -74,7 +74,33 @@ class CourtController extends Controller
 
     public function slots(Request $request, Court $court)
     {
-        $reservations =
+        $openingHour = Carbon::createFromFormat('H:i:s', $court->opening_time)->hour;
+        $closingHour = Carbon::createFromFormat('H:i:s', $court->closing_time)->hour;
+
+        $startPeriod = now();
+        $endPeriod = now()->addWeeks(2);
+        $events = [];
+
+        // Sprawdzenie, czy są już jakieś rezerwacje
+        $existingReservations = $court->reservations()->whereBetween('start_time', [$startPeriod, $endPeriod])->exists();
+
+        if (!$existingReservations) {
+            // Brak rezerwacji, generuj sloty
+            for ($day = 0; $day < 14; $day++) {
+                $date = now()->addDays($day)->format('Y-m-d');
+                for ($hour = $openingHour; $hour < $closingHour; $hour++) {
+                    $startTime = sprintf('%s %02d:00:00', $date, $hour);
+                    $endTime = sprintf('%s %02d:00:00', $date, $hour + 1);
+                    $events[] = [
+                        'title' => 'Rezerwuj',
+                        'start' => $startTime,
+                        'end' => $endTime
+                    ];
+                }
+            }
+        }
+
+        return response()->json($events);
     }
 
     function generateAvailableSlots() {
