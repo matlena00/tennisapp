@@ -3,6 +3,7 @@
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -87,10 +88,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // Dashboard
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 require __DIR__.'/auth.php';

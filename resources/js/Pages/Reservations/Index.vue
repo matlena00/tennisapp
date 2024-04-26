@@ -33,12 +33,12 @@ const props = defineProps({
 
 <style scoped>
 .grass {
-    background-color: #4CAF50;
+    background-color: #339966;
 }
 .clay {
-    background-color: #FF5722;
+    background-color: #993300;
 }
 .hard {
-    background-color: #2196F3;
+    background-color: #336699;
 }
 </style>

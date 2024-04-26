@@ -23,11 +23,11 @@ const props = defineProps({
         </div>
         <table class="max-w-6xl w-full whitespace-nowrap bg-gray-800 rounded-md">
             <tr class="text-left font-bold">
-                <th class="pb-4 pt-6 px-6">Nazwa</th>
-                <th class="pb-4 pt-6 px-6">Opis</th>
-                <th class="pb-4 pt-6 px-6">Nawierzchnia</th>
-                <th class="pb-4 pt-6 px-6">Cena za h</th>
-                <th class="pb-4 pt-6 px-6">Godziny otwarcia</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Nazwa</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Opis</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Nawierzchnia</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Cena za h</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Godziny otwarcia</th>
             </tr>
             <tr v-for="court in courts"
                 class="p-4 m-4 hover:bg-gray-500">
