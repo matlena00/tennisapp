@@ -31,7 +31,7 @@ const props = defineProps({
                 </div>
             </div>
             <div class="grid sm:grid-cols-1">
-                <h2 class="mb-8 text-3xl font-bold">Rezerwacje</h2>
+                <h2 class="mb-8 text-3xl font-bold">Ostatnie rezerwacje</h2>
                 <div v-if="reservations.length > 0">
                     <table class="max-w-6xl w-full whitespace-nowrap bg-gray-800 rounded-md">
                         <tr class="text-left font-bold">

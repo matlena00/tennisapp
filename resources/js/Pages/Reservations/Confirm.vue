@@ -20,7 +20,8 @@ const form = ref({
     ...props.court,
     'start_time': props.start_time,
     'end_time': props.end_time,
-    'user_id': user.id
+    'user_id': user.id,
+    'user_email': user.email
 })
 
 const makeReservation = async () => {
@@ -29,6 +30,7 @@ const makeReservation = async () => {
 
     axios.post('/reservations', {
         'user_id': form.value.user_id,
+        'user_email': form.value.user_email,
         'court_id': props.court.id,
         'start_time': start,
         'end_time': end
@@ -36,7 +38,6 @@ const makeReservation = async () => {
     .then(response => {
         if (response.data) {
             console.log(data);
-
         }
     })
     .catch(error => {

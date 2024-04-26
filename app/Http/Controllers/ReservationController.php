@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReservationConfirmed;
 use App\Models\Court;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
+
 
 class ReservationController extends Controller
 {
@@ -46,7 +49,11 @@ class ReservationController extends Controller
         ]);
 
         $reservation = Reservation::create($validatedData);
+        $court = Court::find($validatedData['court_id']);
 
-        return response()->json(['message' => 'Reservation successful', 'data' => $reservation], 200);
+        //Send confirmation email
+        Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
+
+        return response()->json(['message' => 'Rezerwacja potwierdzona', 'data' => $reservation], 200);
     }
 }
