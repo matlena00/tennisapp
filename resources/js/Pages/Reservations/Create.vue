@@ -16,13 +16,6 @@ const props = defineProps({
 
 const today = new Date().toISOString().slice(0, 10);
 
-const calculateDuration = (start, end) => {
-    const startDate = moment(start);
-    const endDate = moment(end);
-    const duration = moment.duration(endDate.diff(startDate));
-    return duration.asHours();
-}
-
 const showAvailableSlots = () => {
     axios.get(`/courts/${props.court.id}/slots`)
         .then(response => {
@@ -33,9 +26,6 @@ const showAvailableSlots = () => {
         .catch(error => {
             console.error('Error fetching available slots:', error);
         });
-}
-const showReservationModal = (x,y) => {
-    //alert(x)
 }
 
 const events = ref([]);

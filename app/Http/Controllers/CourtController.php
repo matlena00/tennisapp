@@ -81,20 +81,23 @@ class CourtController extends Controller
         $endPeriod = now()->addWeeks(2);
         $events = [];
 
-        // Sprawdzenie, czy są już jakieś rezerwacje
-        $existingReservations = $court->reservations()->whereBetween('start_time', [$startPeriod, $endPeriod])->exists();
+        $existingReservations = $court->reservations()->whereBetween('start_time', [$startPeriod, $endPeriod])->get();
 
-        if (!$existingReservations) {
-            // Brak rezerwacji, generuj sloty
-            for ($day = 0; $day < 14; $day++) {
-                $date = now()->addDays($day)->format('Y-m-d');
-                for ($hour = $openingHour; $hour < $closingHour; $hour++) {
-                    $startTime = sprintf('%s %02d:00:00', $date, $hour);
-                    $endTime = sprintf('%s %02d:00:00', $date, $hour + 1);
+        for ($day = 0; $day < 14; $day++) {
+            $date = now()->addDays($day)->format('Y-m-d');
+            for ($hour = $openingHour; $hour < $closingHour; $hour++) {
+                $startTime = Carbon::parse(sprintf('%s %02d:00:00', $date, $hour));
+                $endTime = Carbon::parse(sprintf('%s %02d:00:00', $date, $hour + 1));
+
+                $isOverlapping = $existingReservations->some(function ($reservation) use ($startTime, $endTime) {
+                    return $startTime->lt(new Carbon($reservation->end_time)) && $endTime->gt(new Carbon($reservation->start_time));
+                });
+
+                if (!$isOverlapping) {
                     $events[] = [
                         'title' => 'Rezerwuj',
-                        'start' => $startTime,
-                        'end' => $endTime
+                        'start' => $startTime->toDateTimeString(),
+                        'end' => $endTime->toDateTimeString(),
                     ];
                 }
             }
