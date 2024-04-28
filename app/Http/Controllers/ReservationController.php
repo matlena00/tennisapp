@@ -56,4 +56,11 @@ class ReservationController extends Controller
 
         return response()->json(['message' => 'Rezerwacja potwierdzona', 'data' => $reservation], 200);
     }
+
+    public function destroy(Reservation $reservation)
+    {
+        $reservation->delete();
+
+        return redirect()->route('dashboard');
+    }
 }

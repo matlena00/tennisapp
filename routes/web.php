@@ -69,6 +69,9 @@ Route::middleware('can:isUser')->group(function () {
 
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])
+        ->name('reservations.destroy');
+
     // Courts
     Route::get('/courts/{court}/availability', [CourtController::class, 'generateAvailableSlots'])
         ->name('court.availability');
@@ -77,8 +80,8 @@ Route::middleware('can:isUser')->group(function () {
         ->name('courts.slots');
 });
 
-// Profile
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])
@@ -86,8 +89,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 });
-
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 require __DIR__.'/auth.php';

@@ -3,10 +3,18 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from '@/Layouts/Aside.vue';
 import MainContent from "@/Components/MainContent.vue";
 import {Head, Link} from '@inertiajs/vue3';
+import DangerButton from "@/Components/DangerButton.vue";
+import {Inertia} from "@inertiajs/inertia";
 const props = defineProps({
     reservations: Array,
     totalHours: Number
 });
+
+const deleteReservation = (reservationId) => {
+    if (confirm("Czy na pewno chcesz anulować tę rezerwację?")) {
+        Inertia.delete(`/reservations/${reservationId}`);
+    }
+}
 </script>
 
 <template>
@@ -73,11 +81,9 @@ const props = defineProps({
                                 </Link>
                             </td>
                             <td>
-                                <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
-                                    <div v-if="reservation.end_time">
-                                        {{ reservation.end_time }}
-                                    </div>
-                                </Link>
+                                <DangerButton class="ms-3" @click="deleteReservation(reservation.id)">
+                                    Rezygnuj
+                                </DangerButton>
                             </td>
                         </tr>
                     </table>
