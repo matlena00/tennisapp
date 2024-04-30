@@ -6,6 +6,7 @@ use App\Mail\ReservationConfirmed;
 use App\Models\Court;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
@@ -15,8 +16,15 @@ class ReservationController extends Controller
 {
     public function index()
     {
+        $user = Auth::getUser();
         $courts = Court::all();
-        return Inertia::render('Reservations/Index', ['courts' => $courts]);
+        $reservations = Reservation::with(['user', 'court'])->get();
+
+        return Inertia::render('Reservations/Index', [
+            'user' => $user,
+            'courts' => $courts,
+            'reservations' => $reservations
+        ]);
     }
 
     public function create(Court $court)
@@ -27,6 +35,11 @@ class ReservationController extends Controller
             'isUser' => Gate::allows('isUser'),
             'court' => $court_id
         ]);
+    }
+
+    public function edit(Reservation $reservation)
+    {
+        return Inertia::render('Reservations/Edit', ['reservation' => $reservation]);
     }
 
     public function confirm($court_id, $start, $end) {
@@ -54,7 +67,7 @@ class ReservationController extends Controller
         //Send confirmation email
         Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
 
-        return response()->json(['message' => 'Rezerwacja potwierdzona', 'data' => $reservation], 200);
+        return redirect()->route('dashboard');
     }
 
     public function destroy(Reservation $reservation)

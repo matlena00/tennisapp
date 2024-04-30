@@ -4,6 +4,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +34,8 @@ Route::middleware('can:isAdmin')->group(function () {
     // Reservations
     Route::get('/reservations', [ReservationController::class, 'index'])
         ->name('reservations.index');
+    Route::get('/reservations/{reservations}/edit', [ReservationController::class, 'edit'])
+        ->name('reservations.edit');
 
 
     // Courts
@@ -56,6 +59,16 @@ Route::middleware('can:isAdmin')->group(function () {
 
     Route::delete('/courts/{court}', [CourtController::class, 'destroy'])
         ->name('courts.destroy');
+
+    // Equipments
+    Route::get('/equipments', [EquipmentController::class, 'index'])
+        ->name('equipments.index');
+
+    Route::get('/equipments/create', [EquipmentController::class, 'create'])
+        ->name('equipments.create');
+
+    Route::post('/equipments', [EquipmentController::class, 'store'])
+        ->name('equipments.store');
 });
 
 Route::middleware('can:isUser')->group(function () {

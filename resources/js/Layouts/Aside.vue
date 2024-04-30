@@ -48,6 +48,13 @@ import {Link} from "@inertiajs/vue3";
             </Link>
             <Link
                 v-if="$page.props.auth.user.role == 'admin'"
+                href="/equipments"
+                class="text-white rounded-md hover:bg-gray-700 p-2"
+            >
+                Wyposażenie
+            </Link>
+            <Link
+                v-if="$page.props.auth.user.role == 'admin'"
                 href="/users"
                 class="text-white rounded-md hover:bg-gray-700 p-2"
             >

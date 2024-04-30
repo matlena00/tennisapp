@@ -11,8 +11,8 @@ class Equipment extends Model
 
     protected $fillable = ['name', 'description', 'hourly_rate', 'quantity', 'available'];
 
-    public function reservations() {
-        return $this->hasMany(Reservation::class);
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
     }
-
 }

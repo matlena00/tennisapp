@@ -53,32 +53,32 @@ const deleteReservation = (reservationId) => {
                             :class="{'grass': reservation.court.surface === 'grass', 'clay': reservation.court.surface === 'clay', 'hard': reservation.court.surface === 'hard'}"
                             class="p-4 m-4 hover:bg-gray-500">
                             <td>
-                                <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
+                                <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
                                     <div v-if="reservation.court.name">
                                         {{ reservation.court.name }}
                                     </div>
-                                </Link>
+                                </div>
                             </td>
                             <td>
-                                <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
+                                <div class="flex items-center px-6 py-4 focus:text-indigo-500">
                                     <div v-if="reservation.court.surface">
                                         {{ reservation.court.surface }}
                                     </div>
-                                </Link>
+                                </div>
                             </td>
                             <td>
-                                <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
+                                <div class="flex items-center px-6 py-4 focus:text-indigo-500">
                                     <div v-if="reservation.start_time">
                                         {{ reservation.start_time }}
                                     </div>
-                                </Link>
+                                </div>
                             </td>
                             <td>
-                                <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
+                                <div class="flex items-center px-6 py-4 focus:text-indigo-500">
                                     <div v-if="reservation.end_time">
                                         {{ reservation.end_time }}
                                     </div>
-                                </Link>
+                                </div>
                             </td>
                             <td>
                                 <DangerButton class="ms-3" @click="deleteReservation(reservation.id)">
