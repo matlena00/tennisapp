@@ -58,16 +58,23 @@ class ReservationController extends Controller
             'court_id' => 'required|integer|exists:courts,id',
             'user_id' => 'required|integer|exists:users,id',
             'start_time' => 'required|date_format:Y-m-d H:i:s',
-            'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time'
+            'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
+            'equipment' => 'sometimes|array'
         ]);
 
         $reservation = Reservation::create($validatedData);
         $court = Court::find($validatedData['court_id']);
 
+        if (isset($validatedData['equipment']) && !empty($validatedData['equipment'])) {
+            foreach ($validatedData['equipment'] as $equipmentData) {
+                $reservation->equipments()->attach($equipmentData['id'], ['quantity' => $equipmentData['quantity']]);
+            }
+        }
+
         //Send confirmation email
         Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
 
-        return redirect()->route('dashboard');
+        return to_route('dashboard');
     }
 
     public function destroy(Reservation $reservation)

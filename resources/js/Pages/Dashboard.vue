@@ -5,6 +5,7 @@ import MainContent from "@/Components/MainContent.vue";
 import {Head, Link} from '@inertiajs/vue3';
 import DangerButton from "@/Components/DangerButton.vue";
 import {Inertia} from "@inertiajs/inertia";
+
 const props = defineProps({
     reservations: Array,
     totalHours: Number

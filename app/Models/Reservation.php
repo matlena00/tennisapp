@@ -22,6 +22,8 @@ class Reservation extends Model
 
     public function equipments()
     {
-        return $this->belongsToMany(Equipment::class, 'reservation_equipment');
+        return $this->belongsToMany(Equipment::class, 'reservation_equipment')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }

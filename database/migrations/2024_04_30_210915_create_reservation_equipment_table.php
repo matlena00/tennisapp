@@ -9,10 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('reservation_equipment', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('reservation_id')->constrained()->onDelete('cascade');
+            $table->foreignId('equipment_id')->constrained()->onDelete('cascade');
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }
@@ -20,7 +23,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+
+    public function down()
     {
         Schema::dropIfExists('reservation_equipment');
     }

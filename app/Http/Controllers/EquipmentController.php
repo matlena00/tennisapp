@@ -34,4 +34,16 @@ class EquipmentController extends Controller
 
         return redirect()->route('equipments.index');
     }
+
+    public function available(Request $request) {
+        $start_date = $request->start_time;
+        $end_date = $request->end_time;
+
+        $availableEquipments = Equipment::whereDoesntHave('reservation', function ($query) use ($start_date, $end_date) {
+            $query->whereBetween('start_time', [$start_date, $end_date])
+                ->orWhereBetween('end_time', [$start_date, $end_date]);
+        })->get();
+
+        return response()->json($availableEquipments);
+    }
 }

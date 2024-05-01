@@ -11,8 +11,10 @@ class Equipment extends Model
 
     protected $fillable = ['name', 'description', 'hourly_rate', 'quantity', 'available'];
 
-    public function reservations()
+    public function reservation()
     {
-        return $this->belongsToMany(Reservation::class);
+        return $this->belongsToMany(Reservation::class, 'reservation_equipment')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }
