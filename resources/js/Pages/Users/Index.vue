@@ -23,18 +23,25 @@ const props = defineProps({
         </div>
         <table class="max-w-6xl w-full whitespace-nowrap bg-primary rounded-md">
             <tr class="text-left font-bold">
-                <th class="pb-4 pt-6 px-6 text-xl">Nazwa</th>
-                <th class="pb-4 pt-6 px-6 text-xl">Opis</th>
-                <th class="pb-4 pt-6 px-6 text-xl">Nawierzchnia</th>
-                <th class="pb-4 pt-6 px-6 text-xl">Cena za h</th>
-                <th class="pb-4 pt-6 px-6 text-xl">Godziny otwarcia</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Imię</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Nazwisko</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Nick</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Email</th>
+                <th class="pb-4 pt-6 px-6 text-xl">Telefon</th>
             </tr>
             <tr v-for="user in users"
-                class="p-4 m-4 hover:bg-gray-500">
+                class="p-4 m-4 hover:bg-accent1">
                 <td>
                     <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
-                        <div v-if="user.name">
-                            {{ user.name }}
+                        <div v-if="user.first_name">
+                            {{ user.first_name }}
+                        </div>
+                    </Link>
+                </td>
+                <td>
+                    <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
+                        <div v-if="user.last_name">
+                            {{ user.last_name }}
                         </div>
                     </Link>
                 </td>
@@ -47,22 +54,15 @@ const props = defineProps({
                 </td>
                 <td>
                     <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
-                        <div v-if="user.name">
-                            {{ user.name }}
+                        <div v-if="user.email">
+                            {{ user.email }}
                         </div>
                     </Link>
                 </td>
                 <td>
                     <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
-                        <div v-if="user.name">
-                            {{ user.name }}
-                        </div>
-                    </Link>
-                </td>
-                <td>
-                    <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/users/${user.id}/edit`">
-                        <div>
-                            Test
+                        <div v-if="user.phone">
+                            {{ user.phone }}
                         </div>
                     </Link>
                 </td>

@@ -15,7 +15,7 @@ const props = defineProps({
     <Aside></Aside>
 
     <MainContent>
-        <h1 class="mb-8 text-3xl font-bold">Wszystkie Sprzęty</h1>
+        <h1 class="mb-8 text-3xl font-bold">Sprzęty</h1>
         <div class="max-w-6xl flex items-center justify-end mb-6">
             <Link class="px-6 py-3 bg-primary text-white rounded-md" href="/equipments/create">
                 <span>Stwórz</span>
@@ -30,7 +30,7 @@ const props = defineProps({
                 <th class="pb-4 pt-6 px-6 text-xl">Ilość</th>
             </tr>
             <tr v-for="equipment in equipments"
-                class="p-4 m-4 hover:bg-gray-500">
+                class="p-4 m-4 hover:bg-accent1">
                 <td>
                     <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/equipments/${equipment.id}/edit`">
                         <div v-if="equipment.name">

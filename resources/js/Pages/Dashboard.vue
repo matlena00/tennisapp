@@ -26,17 +26,22 @@ const deleteReservation = (reservationId) => {
     <MainContent>
         <div class="flex flex-col gap-16">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-6 max-w-6xl">
-                <div class="bg-green-600 text-white font-bold text-2xl text-center p-8 rounded-xl">
+                <div class="bg-accent1 text-white font-bold text-2xl text-center p-8 rounded-xl">
                     Liczba rezerwacji
                     <span class="block text-center text-4xl">{{ reservations.length }}</span>
                 </div>
-                <div class="bg-orange-400 text-white font-bold text-2xl text-center p-8 rounded-xl">
+                <div class="bg-accent2 text-white font-bold text-2xl text-center p-8 rounded-xl">
                     Godziny na korcie
-                    <span class="block text-center text-4xl">{{ totalHours }}</span>
+                    <span class="block text-center text-4xl">{{ totalHours }} h</span>
                 </div>
-                <div class="bg-blue-500 text-white font-bold text-2xl text-center p-8 rounded-xl">
+                <div class="bg-accent3 text-white font-bold text-2xl text-center p-8 rounded-xl">
                     Najbliższa rezerwacja
-                    <span class="block text-center text-4xl">{{ reservations.length }}</span>
+                    <span v-if="reservations.length > 0" class="block text-center text-4xl">
+                        {{ reservations.length }}
+                    </span>
+                    <span v-else class="block text-center text-4xl">
+                        brak
+                    </span>
                 </div>
             </div>
             <div class="grid sm:grid-cols-1">
@@ -52,7 +57,7 @@ const deleteReservation = (reservationId) => {
                         </tr>
                         <tr v-for="reservation in reservations"
                             :class="{'grass': reservation.court.surface === 'grass', 'clay': reservation.court.surface === 'clay', 'hard': reservation.court.surface === 'hard'}"
-                            class="p-4 m-4 hover:bg-gray-500">
+                            class="p-4 m-4 hover:bg-accent1">
                             <td>
                                 <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
                                     <div v-if="reservation.court.name">
