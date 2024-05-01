@@ -5,6 +5,7 @@ use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +32,9 @@ Route::get('/', function () {
 
 // Routing used only by admin
 Route::middleware('can:isAdmin')->group(function () {
+    // Users
+    Route::resource('users', UserController::class);
+
     // Reservations
     Route::get('/reservations', [ReservationController::class, 'index'])
         ->name('reservations.index');

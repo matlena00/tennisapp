@@ -109,7 +109,7 @@ const makeReservation = async () => {
                     <h3 class="text-xl font-bold mb-4">Dodatkowy sprzęt:</h3>
                     <div v-for="item in form.equipment" :key="item.id" class="py-2">
                         <span class="font-semibold">{{ getEquipmentName(item.id) }} | </span>
-                        <span> Liczba sztuk: {{ item.quantity }} | </span>
+                        <span> Liczba egzemplarzy: {{ item.quantity }} | </span>
                         <span> Cena za godzinę: {{ getEquipmentRate(item.id) }} zł</span>
                     </div>
                 </div>
