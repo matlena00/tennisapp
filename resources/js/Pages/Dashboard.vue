@@ -42,7 +42,7 @@ const deleteReservation = (reservationId) => {
             <div class="grid sm:grid-cols-1">
                 <h2 class="mb-8 text-3xl font-bold">Ostatnie rezerwacje</h2>
                 <div v-if="reservations.length > 0">
-                    <table class="max-w-6xl w-full whitespace-nowrap bg-gray-800 rounded-md">
+                    <table class="max-w-6xl w-full whitespace-nowrap bg-primary rounded-md">
                         <tr class="text-left font-bold">
                             <th class="pb-4 pt-6 px-6 text-xl">Nazwa kortu</th>
                             <th class="pb-4 pt-6 px-6 text-xl">Nawierzchnia</th>
@@ -91,7 +91,7 @@ const deleteReservation = (reservationId) => {
                 </div>
                 <div v-else>
                     <span>Nie posiadasz jeszcze żadnych rezerwacji.</span>
-                    <Link href="/reservations/index" class="text-white rounded-md hover:bg-gray-700 p-2"> </Link>
+                    <Link href="/reservations/index" class="text-white rounded-md hover:bg-secondary p-2"> </Link>
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@ const deleteCourt = () => {
     <Aside></Aside>
     <MainContent>
         <h2 class="mb-8 text-3xl font-bold">Edycja kortu</h2>
-        <form @submit.prevent="updateCourt" class="max-w-6xl p-4 bg-gray-800 rounded-md">
+        <form @submit.prevent="updateCourt" class="max-w-6xl p-4 bg-primary rounded-md">
             <div class="flex flex-col gap-2 p-8">
                 <input v-model="form.name" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Name" />
                 <input v-model="form.description" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800" label="Description" />
@@ -43,7 +43,7 @@ const deleteCourt = () => {
                 <input v-model="form.hourly_rate" type="number" label="Hourly Rate" min="0">
                 <div class="flex justify-between">
                     <button class="mt-4 bg-white border-2 text-red-600 border-white w-fit  py-2 px-4 rounded-lg hover:underline" @click="deleteCourt()">Usuń</button>
-                    <button class="mt-4 bg-gray-800 border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-green-500">Aktualizuj kort</button>
+                    <button class="mt-4 bg-primary border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-green-500">Aktualizuj kort</button>
                 </div>
             </div>
         </form>

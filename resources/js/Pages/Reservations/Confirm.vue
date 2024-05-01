@@ -100,7 +100,7 @@ const makeReservation = async () => {
     <Aside></Aside>
     <MainContent>
         <h1 class="mb-8 text-3xl font-bold">Sprawdź poprawność danych i kliknij przycisk Rezerwuj w celu dokonania rezerwacji</h1>
-        <form @submit.prevent="makeReservation()" class="max-w-6xl p-4 bg-gray-800 rounded-md">
+        <form @submit.prevent="makeReservation()" class="max-w-6xl p-4 bg-primary rounded-md">
             <div class="flex flex-col gap-2 p-8">
                 <input v-model="form.name" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Name" />
                 <input v-model="form.start_time" class="text-gray-800" type="datetime-local" label="Opening Time">
@@ -115,10 +115,10 @@ const makeReservation = async () => {
                 </div>
                 <div class="flex justify-between">
                     <button class="mt-4 bg-white border-2 text-red-600 border-white w-fit  py-2 px-4 rounded-lg hover:underline" @click="route('/reservations/index')">Wróć</button>
-                    <button class="mt-4 bg-gray-800 border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-green-500">Rezerwuj</button>
+                    <button class="mt-4 bg-primary border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-green-500">Rezerwuj</button>
                 </div>
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="equipment in availableEquipment" :key="equipment.id" class="p-4 bg-gray-700 rounded-md">
+                    <div v-for="equipment in availableEquipment" :key="equipment.id" class="p-4 bg-secondary rounded-md">
                         <h3 class="text-white font-bold">{{ equipment.name }}</h3>
                         <p class="text-gray-300">{{ equipment.description }}</p>
                         <p class="text-gray-300">{{ equipment.hourly_rate }}</p>

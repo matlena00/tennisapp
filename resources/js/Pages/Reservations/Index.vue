@@ -19,7 +19,7 @@ const props = defineProps({
     <Aside></Aside>
     <MainContent>
         <div v-if="user.role === 'admin'">
-                <table class="max-w-6xl w-full whitespace-nowrap bg-gray-800 rounded-md">
+                <table class="max-w-6xl w-full whitespace-nowrap bg-primary rounded-md">
                     <tr class="text-left font-bold">
                         <th class="pb-4 pt-6 px-6 text-xl">Użytkownik</th>
                         <th class="pb-4 pt-6 px-6 text-xl">Nazwa kortu</th>
@@ -78,7 +78,7 @@ const props = defineProps({
                         <p class="mb-4">{{court.description}}</p>
                         <p class="">Otwarcie: {{court.opening_time}}</p>
                         <p class="">Zamknięcie: {{court.closing_time}}</p>
-                        <span class="p-4 mt-3 text-white bg-gray-800 w-fit rounded-md">Cena za 1h: {{court.hourly_rate}} zł</span>
+                        <span class="p-4 mt-3 text-white bg-primary w-fit rounded-md">Cena za 1h: {{court.hourly_rate}} zł</span>
                     </Link>
                 </div>
             </div>

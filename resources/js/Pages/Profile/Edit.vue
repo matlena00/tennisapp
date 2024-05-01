@@ -25,7 +25,7 @@ defineProps({
 
     <MainContent>
         <div class="flex gap-y-8 flex-col max-w-screen-xl">
-            <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-primary shadow sm:rounded-lg">
                 <UpdateProfileInformationForm
                     :must-verify-email="mustVerifyEmail"
                     :status="status"
@@ -33,11 +33,11 @@ defineProps({
                 />
             </div>
 
-            <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-primary shadow sm:rounded-lg">
                 <UpdatePasswordForm class="max-w-xl" />
             </div>
 
-            <div class="p-4 sm:p-8 bg-gray-800 shadow sm:rounded-lg">
+            <div class="p-4 sm:p-8 bg-primary shadow sm:rounded-lg">
                 <DeleteUserForm class="max-w-xl" />
             </div>
         </div>

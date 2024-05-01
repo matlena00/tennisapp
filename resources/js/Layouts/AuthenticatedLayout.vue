@@ -11,14 +11,14 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <nav class="bg-gray-800 h-16 p-4 flex justify-between">
+    <nav class="bg-primary h-16 p-4 flex justify-between">
         <div class="flex gap-4">
             <Link :href="route('dashboard')"
                   class="flex flex-row gap-3 items-center">
                 <ApplicationLogo
-                    class="block h-9 w-auto fill-current text-white"
+                    class="text-white"
                 />
-                <p class="text-white">tenisso</p>
+                <p class="text-white font-bold text-3xl ml-[-160px]">tenisso</p>
             </Link>
         </div>
         <div>

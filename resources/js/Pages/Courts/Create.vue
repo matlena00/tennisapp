@@ -33,7 +33,7 @@ defineProps({
 
     <MainContent>
         <h2 class="mb-8 text-3xl text-white">Dodaj nowy kort</h2>
-        <form @submit.prevent="createCourt" class="max-w-6xl p-4 bg-gray-800 rounded-md">
+        <form @submit.prevent="createCourt" class="max-w-6xl p-4 bg-primary rounded-md">
             <div class="flex flex-col gap-2 p-8 text-gray-800">
                 <input v-model="form.name" class="pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Name" placeholder="Nazwa kortu"/>
                 <input v-model="form.description" class="pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Description" placeholder="Opis"/>
@@ -45,7 +45,7 @@ defineProps({
                     <option value="clay">Mączka</option>
                 </select>
                 <input v-model="form.hourly_rate" type="number" label="Hourly Rate" min="0" placeholder="Stawka za godzinę">
-                <button class="mt-4 bg-gray-800 border-2 text-white border-white w-fit mx-auto py-2 px-4 rounded-lg">Dodaj kort</button>
+                <button class="mt-4 bg-primary border-2 text-white border-white w-fit mx-auto py-2 px-4 rounded-lg">Dodaj kort</button>
             </div>
         </form>
     </MainContent>

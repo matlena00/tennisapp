@@ -17,12 +17,12 @@ const props = defineProps({
     <MainContent>
         <h1 class="mb-8 text-3xl font-bold">Wszystkie Sprzęty</h1>
         <div class="max-w-6xl flex items-center justify-end mb-6">
-            <Link class="px-6 py-3 bg-gray-800 text-white rounded-md" href="/equipments/create">
+            <Link class="px-6 py-3 bg-primary text-white rounded-md" href="/equipments/create">
                 <span>Stwórz</span>
                 <span class="hidden md:inline">&nbsp;nowy</span>
             </Link>
         </div>
-        <table class="max-w-6xl w-full whitespace-nowrap bg-gray-800 rounded-md">
+        <table class="max-w-6xl w-full whitespace-nowrap bg-primary rounded-md">
             <tr class="text-left font-bold">
                 <th class="pb-4 pt-6 px-6 text-xl">Nazwa</th>
                 <th class="pb-4 pt-6 px-6 text-xl">Opis</th>
