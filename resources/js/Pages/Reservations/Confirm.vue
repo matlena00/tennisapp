@@ -105,7 +105,7 @@ const makeReservation = async () => {
                 <input v-model="form.name" class="pb-4 pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Name" />
                 <input v-model="form.start_time" class="text-gray-800" type="datetime-local" label="Opening Time">
                 <input v-model="form.end_time" class="text-gray-800" type="datetime-local" label="Closing Time">
-                <div v-if="form.equipment.length > 0" class="mt-6 bg-blue-600 p-4 rounded-md">
+                <div v-if="form.equipment.length > 0" class="mt-6 bg-secondary p-4 rounded-md">
                     <h3 class="text-xl font-bold mb-4">Dodatkowy sprzęt:</h3>
                     <div v-for="item in form.equipment" :key="item.id" class="py-2">
                         <span class="font-semibold">{{ getEquipmentName(item.id) }} | </span>
@@ -115,7 +115,7 @@ const makeReservation = async () => {
                 </div>
                 <div class="flex justify-between">
                     <button class="mt-4 bg-white border-2 text-red-600 border-white w-fit  py-2 px-4 rounded-lg hover:underline" @click="route('/reservations/index')">Wróć</button>
-                    <button class="mt-4 bg-primary border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-green-500">Rezerwuj</button>
+                    <button class="mt-4 bg-primary border-2 text-white border-white w-fit  py-2 px-4 rounded-lg hover:text-white hover:bg-accent1">Rezerwuj</button>
                 </div>
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div v-for="equipment in availableEquipment" :key="equipment.id" class="p-4 bg-secondary rounded-md">
@@ -124,7 +124,7 @@ const makeReservation = async () => {
                         <p class="text-gray-300">{{ equipment.hourly_rate }}</p>
                         <input type="number" v-model.number="equipment.selectedQuantity" :max="4" min="0" value="1" class="w-full mt-2 p-1 rounded-md text-gray-800" />
                         <div class="mt-2">
-                            <button @click="addToReservation(equipment)" type="button" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Dodaj do rezerwacji</button>
+                            <button @click="addToReservation(equipment)" type="button" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-accent1">Dodaj do rezerwacji</button>
                         </div>
                     </div>
                 </div>
