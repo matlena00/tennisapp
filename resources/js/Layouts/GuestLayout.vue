@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/vue3';
 <template>
     <nav class="bg-primary h-16 p-4 flex justify-between border-b border-b-white">
         <div class="flex gap-4">
-            <Link :href="route('dashboard')"
+            <Link :href="route('welcome')"
             class="flex flex-row gap-3 items-center">
                 <ApplicationLogo
                     class="text-white"
