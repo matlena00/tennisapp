@@ -42,7 +42,7 @@ Route::middleware('can:isAdmin')->group(function () {
     // Reservations
     Route::get('/reservations', [ReservationController::class, 'index'])
         ->name('reservations.index');
-    Route::get('/reservations/{reservations}/edit', [ReservationController::class, 'edit'])
+    Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])
         ->name('reservations.edit');
 
 

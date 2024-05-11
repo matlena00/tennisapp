@@ -55,21 +55,21 @@ const translateSurface = (surface) => {
                         </Link>
                     </td>
                     <td>
-                        <Link class="flex items-center px-6 py-4 focus:text-indigo-500">
+                        <Link class="flex items-center px-6 py-4 focus:text-indigo-500"  :href="`/reservations/${reservation.id}/edit`">
                             <div v-if="reservation.court.surface">
                                 {{ translateSurface(reservation.court.surface) }}
                             </div>
                         </Link>
                     </td>
                     <td>
-                        <Link class="flex items-center px-6 py-4 focus:text-indigo-500">
+                        <Link class="flex items-center px-6 py-4 focus:text-indigo-500"  :href="`/reservations/${reservation.id}/edit`">
                             <div v-if="reservation.start_time">
                                 {{ reservation.start_time }}
                             </div>
                         </Link>
                     </td>
                     <td>
-                        <Link class="flex items-center px-6 py-4 focus:text-indigo-500">
+                        <Link class="flex items-center px-6 py-4 focus:text-indigo-500"  :href="`/reservations/${reservation.id}/edit`">
                             <div v-if="reservation.end_time">
                                 {{ reservation.end_time }}
                             </div>

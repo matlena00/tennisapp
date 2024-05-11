@@ -39,6 +39,7 @@ class ReservationController extends Controller
 
     public function edit(Reservation $reservation)
     {
+        $reservation = Reservation::with('user')->find($reservation->id);
         return Inertia::render('Reservations/Edit', ['reservation' => $reservation]);
     }
 

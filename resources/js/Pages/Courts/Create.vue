@@ -37,14 +37,14 @@ defineProps({
             <div class="flex flex-col gap-2 p-8 text-gray-800">
                 <input v-model="form.name" class="pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Name" placeholder="Nazwa kortu"/>
                 <input v-model="form.description" class="pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Description" placeholder="Opis"/>
-                <input v-model="form.opening_time" type="time" label="Opening Time">
-                <input v-model="form.closing_time" type="time" label="Closing Time">
+                <input v-model="form.opening_time" class="text-gray-800" type="time" label="Opening Time">
+                <input v-model="form.closing_time" class="text-gray-800" type="time" label="Closing Time">
                 <select v-model="form.surface" class="pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Surface">
                     <option value="hard" selected>Twarda</option>
                     <option value="grass">Trawiasta</option>
                     <option value="clay">Mączka</option>
                 </select>
-                <input v-model="form.hourly_rate" type="number" label="Hourly Rate" min="0" placeholder="Stawka za godzinę">
+                <input v-model="form.hourly_rate" class="text-gray-800" type="number" label="Hourly Rate" min="0" placeholder="Stawka za godzinę">
                 <button class="mt-4 bg-primary border-2 text-white border-white w-fit mx-auto py-2 px-4 rounded-lg">Dodaj kort</button>
             </div>
         </form>
