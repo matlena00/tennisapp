@@ -9,13 +9,39 @@ import {Inertia} from "@inertiajs/inertia";
 const props = defineProps({
     reservations: Array,
     totalHours: Number,
-    upcomingReservation: Object
+    upcomingReservation: Object,
+    csrfToken: String
 });
 
 const deleteReservation = (reservationId) => {
     if (confirm("Czy na pewno chcesz anulować tę rezerwację?")) {
         Inertia.delete(`/reservations/${reservationId}`);
     }
+}
+
+const cancelReservation = (id) => {
+    console.log(id);
+    if (confirm("Czy na pewno chcesz anulować tę rezerwację?")) {
+        Inertia.post(`/reservations/${id}/cancel`, {_method: 'post', _token: props.csrfToken});
+    }
+}
+
+const canCancel = (startTime, status) => {
+    if (status === 'canceled') return false;
+
+    const reservationDate = new Date(startTime);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    return reservationDate > currentDate;
+}
+
+const translateStatus = (status) => {
+    const statusTranslations = {
+        'scheduled': 'Zaplanowana',
+        'canceled': 'Anulowana',
+        'completed': 'Zakończona'
+    };
+    return statusTranslations[status] || status;
 }
 </script>
 
@@ -42,7 +68,7 @@ const deleteReservation = (reservationId) => {
                             {{ upcomingReservation.date }}
                         </span>
                         <span class="block text-center bg-secondary rounded-full text-accent3 w-fit px-4 py-2">
-                            {{ upcomingReservation.start_time }} - {{ upcomingReservation.start_time }}
+                            {{ upcomingReservation.start_time }} - {{ upcomingReservation.end_time }}
                         </span>
                         <span class="block text-center bg-accent2 rounded-full text-white w-fit px-4 py-2">Kort: {{upcomingReservation.court_name}}</span>
                     </div>
@@ -63,6 +89,7 @@ const deleteReservation = (reservationId) => {
                             <th class="pb-4 pt-6 px-6 text-xl">Nawierzchnia</th>
                             <th class="pb-4 pt-6 px-6 text-xl">Od</th>
                             <th class="pb-4 pt-6 px-6 text-xl">Do</th>
+                            <th class="pb-4 pt-6 px-6 text-xl">Status</th>
                             <th class="pb-4 pt-6 px-6 text-xl"></th>
                         </tr>
                         <tr v-for="reservation in reservations"
@@ -97,7 +124,14 @@ const deleteReservation = (reservationId) => {
                                 </div>
                             </td>
                             <td>
-                                <DangerButton class="ms-3" @click="deleteReservation(reservation.id)">
+                                <div class="flex items-center px-6 py-4 focus:text-indigo-500">
+                                    <div v-if="reservation.status">
+                                        {{ translateStatus(reservation.status) }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <DangerButton class="ms-3" v-if="canCancel(reservation.start_time, reservation.status)" @click="cancelReservation(reservation.id)">
                                     Rezygnuj
                                 </DangerButton>
                             </td>

@@ -37,7 +37,13 @@ Route::get('/welcome', function () {
 // Routing used only by admin
 Route::middleware('can:isAdmin')->group(function () {
     // Users
-    Route::resource('users', UserController::class);
+    Route::get('/users', [UserController::class, 'index'])
+        ->name('users.index');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+        ->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])
+        ->name('users.update');
+
 
     // Reservations
     Route::get('/reservations', [ReservationController::class, 'index'])
@@ -84,6 +90,9 @@ Route::middleware('can:isUser')->group(function () {
     Route::get('/reservations/index', [ReservationController::class, 'index'])
         ->name('user.reservations.index');
 
+    Route::get('/my-reservations', [ReservationController::class, 'myReservations'])->name('my.reservations');
+
+
     Route::get('/reserve/{court}', [ReservationController::class, 'create'])->name('reservations.create');
 
     Route::get('/reservation/confirm/{court}/{start}/{end}', [ReservationController::class, 'confirm'])->name('reservation.confirm');
@@ -92,6 +101,9 @@ Route::middleware('can:isUser')->group(function () {
 
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])
         ->name('reservations.destroy');
+
+    Route::post('/reservations/{id}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+
 
     // Courts
     Route::get('/courts/{court}/availability', [CourtController::class, 'generateAvailableSlots'])

@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Enums\ReservationStatus;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +14,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            $reservations = \App\Models\Reservation::where('end_time', '<=', Carbon::now('Europe/Warsaw'))
+                ->where('status', '!=', ReservationStatus::COMPLETED)
+                ->get();
+
+            foreach ($reservations as $reservation) {
+                $reservation->update(['status' => 'completed']);
+            }
+        })->hourly();
     }
 
     /**

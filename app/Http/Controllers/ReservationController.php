@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReservationStatus;
 use App\Mail\ReservationConfirmed;
 use App\Models\Court;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 
@@ -60,6 +63,7 @@ class ReservationController extends Controller
             'user_id' => 'required|integer|exists:users,id',
             'start_time' => 'required|date_format:Y-m-d H:i:s',
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
+            'sometimes|string|in:' . implode(',', ReservationStatus::STATUSES),
             'equipment' => 'sometimes|array'
         ]);
 
@@ -76,10 +80,35 @@ class ReservationController extends Controller
         try {
             Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
         } catch (\Exception $e) {
-            \Log::error('Mail sending failed: ' . $e->getMessage());
+            Log::error('Wysyłanie maila nie powiodło się: ' . $e->getMessage());
         }
 
         return redirect()->route('dashboard');
+    }
+
+    public function cancel($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $reservation->start_time);
+        $today = Carbon::today();
+
+        if ($startDateTime->gt($today)) {
+            $reservation->status = ReservationStatus::CANCELED;
+            $reservation->save();
+            return redirect()->route('dashboard')->with('success', 'Rezerwacja została anulowana.');
+        } else {
+            return redirect()->route('dashboard')->withErrors('Nie można anulować rezerwacji w dniu jej rozpoczęcia.');
+        }
+    }
+
+    public function myReservations()
+    {
+        $user = Auth::user();
+        $reservations = $user->reservations()->with(['court', 'user'])->get();
+
+        return Inertia::render('Reservations/MyReservations', [
+            'reservations' => $reservations
+        ]);
     }
 
     public function destroy(Reservation $reservation)

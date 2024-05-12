@@ -27,7 +27,7 @@ import {Link} from "@inertiajs/vue3";
             </Link>
             <Link
                 v-if="$page.props.auth.user.role == 'user'"
-                href="#"
+                href="/my-reservations"
                 class="text-white rounded-md hover:bg-secondary p-2"
             >
                 Moje rezerwacje

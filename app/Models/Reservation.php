@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReservationStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,13 +10,17 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['court_id', 'start_time', 'end_time', 'user_id'];
+    protected $fillable = ['court_id', 'start_time', 'end_time', 'user_id', 'status']; // Make sure 'status' is fillable if it needs to be explicitly set sometimes.
     protected $casts = [
         'start_time' => 'datetime:Y-m-d H:i:s',
         'end_time' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $dates = ['start_time', 'end_time'];
+
+    protected $attributes = [
+        'status' => ReservationStatus::SCHEDULED
+    ];
 
     public function user()
     {

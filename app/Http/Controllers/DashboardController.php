@@ -15,6 +15,7 @@ class DashboardController extends Controller
 
             $allReservations = Reservation::with('court')
                 ->where('user_id', auth()->id())
+                ->orderBy('created_at', 'desc')
                 ->get();
 
             $upcomingReservation = $allReservations
