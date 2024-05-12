@@ -29,7 +29,7 @@ class AccountCreatedMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('tenisso@matmat00.pl', 'TENISSO'),
+            from: new Address(env('MAIL_FROM_ADDRESS', 'default@example.com'), env('MAIL_FROM_NAME', 'Default Name')),
             subject: 'TENNISO - Twoje konto zostało utworzone!',
         );
     }
