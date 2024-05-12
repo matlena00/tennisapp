@@ -73,9 +73,15 @@ class ReservationController extends Controller
         }
 
         //Send confirmation email
-        Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
+        //Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
+        try {
+            Mail::to($request['user_email'])->send(new ReservationConfirmed($reservation));
+        } catch (\Exception $e) {
+            \Log::error('Mail sending failed: ' . $e->getMessage());
+            // opcjonalnie zwróć informację użytkownikowi
+        }
 
-        return to_route('dashboard');
+        return $request;
     }
 
     public function destroy(Reservation $reservation)
