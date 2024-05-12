@@ -51,19 +51,49 @@ const translateStatus = (status) => {
                         <th class="pb-4 pt-6 px-6 text-xl">Od</th>
                         <th class="pb-4 pt-6 px-6 text-xl">Do</th>
                         <th class="pb-4 pt-6 px-6 text-xl">Status</th>
-                        <th class="pb-4 pt-6 px-6 text-xl">Akcje</th>
+                        <th class="pb-4 pt-6 px-6 text-xl"></th>
                     </tr>
-                    <tr v-for="reservation in reservations" :key="reservation.id"
+                    <tr v-for="reservation in reservations"
                         :class="{'grass': reservation.court.surface === 'grass', 'clay': reservation.court.surface === 'clay', 'hard': reservation.court.surface === 'hard'}"
                         class="p-4 m-4 hover:bg-accent1">
-                        <td>{{ reservation.court.name }}</td>
-                        <td>{{ reservation.court.surface }}</td>
-                        <td>{{ reservation.start_time }}</td>
-                        <td>{{ reservation.end_time }}</td>
-                        <td>{{ translateStatus(reservation.status) }}</td>
                         <td>
-                            <DangerButton v-if="canCancel(reservation.start_time, reservation.status)" @click="cancelReservation(reservation.id)">
-                                Anuluj
+                            <div class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/reservations/${reservation.id}/edit`">
+                                <div v-if="reservation.court.name">
+                                    {{ reservation.court.name }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center px-6 py-4 focus:text-indigo-500">
+                                <div v-if="reservation.court.surface">
+                                    {{ reservation.court.surface }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center px-6 py-4 focus:text-indigo-500">
+                                <div v-if="reservation.start_time">
+                                    {{ reservation.start_time }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center px-6 py-4 focus:text-indigo-500">
+                                <div v-if="reservation.end_time">
+                                    {{ reservation.end_time }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex items-center px-6 py-4 focus:text-indigo-500">
+                                <div v-if="reservation.status">
+                                    {{ translateStatus(reservation.status) }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <DangerButton class="ms-3" v-if="canCancel(reservation.start_time, reservation.status)" @click="cancelReservation(reservation.id)">
+                                Rezygnuj
                             </DangerButton>
                         </td>
                     </tr>
