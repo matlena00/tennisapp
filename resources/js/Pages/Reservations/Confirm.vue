@@ -1,5 +1,6 @@
 <script setup>
 import {defineProps, ref} from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Aside from "@/Layouts/Aside.vue";
 import MainContent from "@/Components/MainContent.vue";
@@ -86,7 +87,7 @@ const makeReservation = async () => {
     })
     .then(response => {
         if (response.data) {
-            console.log(data);
+            Inertia.visit('/dashboard');
         }
     })
     .catch(error => {

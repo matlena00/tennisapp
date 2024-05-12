@@ -10,6 +10,12 @@ class Reservation extends Model
     use HasFactory;
 
     protected $fillable = ['court_id', 'start_time', 'end_time', 'user_id'];
+    protected $casts = [
+        'start_time' => 'datetime:Y-m-d H:i:s',
+        'end_time' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    protected $dates = ['start_time', 'end_time'];
 
     public function user()
     {

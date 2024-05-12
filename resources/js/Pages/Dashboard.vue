@@ -8,7 +8,8 @@ import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     reservations: Array,
-    totalHours: Number
+    totalHours: Number,
+    upcomingReservation: Object
 });
 
 const deleteReservation = (reservationId) => {
@@ -24,27 +25,36 @@ const deleteReservation = (reservationId) => {
     <Aside></Aside>
 
     <MainContent>
-        <div class="flex flex-col gap-16">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-6 max-w-6xl">
-                <div class="bg-accent1 text-white font-bold text-2xl text-center p-8 rounded-xl">
+        <div class="flex flex-col gap-16 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-6 max-w-6xl w-full">
+                <div class="flex flex-col gap-y-3 justify-center bg-accent1 text-white font-bold text-2xl text-center p-8 rounded-xl items-center content-center">
                     Liczba rezerwacji
-                    <span class="block text-center text-4xl">{{ reservations.length }}</span>
+                    <span class="block text-secondary text-4xl w-fit p-4 bg-accent3 rounded-full">{{ reservations.length }}</span>
                 </div>
-                <div class="bg-accent2 text-white font-bold text-2xl text-center p-8 rounded-xl">
+                <div class="flex flex-col gap-y-3 justify-center bg-accent2 text-white font-bold text-2xl text-center p-8 rounded-xl items-center content-center">
                     Godziny na korcie
-                    <span class="block text-center text-4xl">{{ totalHours }} h</span>
+                    <span class="block text-center text-secondary text-4xl  w-fit p-4 bg-accent3 rounded-full">{{ totalHours }}h</span>
                 </div>
-                <div class="bg-accent3 text-white font-bold text-2xl text-center p-8 rounded-xl">
+                <div class="flex flex-col gap-y-3 bg-accent3 text-white font-bold text-2xl text-center p-8 rounded-xl">
                     Najbliższa rezerwacja
-                    <span v-if="reservations.length > 0" class="block text-center text-4xl">
-                        {{ reservations.length }}
-                    </span>
-                    <span v-else class="block text-center text-4xl">
-                        brak
-                    </span>
+                    <div v-if="upcomingReservation" class="flex flex-col gap-y-3 justify-center items-center">
+                        <span class="block text-center bg-accent2 rounded-full text-secondary w-fit px-4 py-2">
+                            {{ upcomingReservation.date }}
+                        </span>
+                        <span class="block text-center bg-secondary rounded-full text-accent3 w-fit px-4 py-2">
+                            {{ upcomingReservation.start_time }} - {{ upcomingReservation.start_time }}
+                        </span>
+                        <span class="block text-center bg-accent2 rounded-full text-white w-fit px-4 py-2">Kort: {{upcomingReservation.court_name}}</span>
+                    </div>
+                    <div v-else>
+                        <span class="block text-center text-4xl">
+                            brak
+                        </span>
+                    </div>
+
                 </div>
             </div>
-            <div class="grid sm:grid-cols-1">
+            <div class="grid sm:grid-cols-1 max-w-6xl w-full">
                 <h2 class="mb-6 text-3xl font-bold">Ostatnie rezerwacje</h2>
                 <div v-if="reservations.length > 0">
                     <table class="max-w-6xl w-full whitespace-nowrap bg-primary rounded-md">
