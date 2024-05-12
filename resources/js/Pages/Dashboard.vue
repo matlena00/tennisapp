@@ -197,7 +197,7 @@ const formatDateTime = (datetime) => {
                                 <td>
                                     <div class="flex items-center px-6 py-4 focus:text-indigo-500">
                                         <div v-if="reservation.court.surface">
-                                            {{ reservation.court.surface }}
+                                            {{ translateSurface(reservation.court.surface) }}
                                         </div>
                                     </div>
                                 </td>
