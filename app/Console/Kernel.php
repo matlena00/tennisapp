@@ -15,14 +15,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(function () {
-            $reservations = \App\Models\Reservation::where('end_time', '<=', Carbon::now('Europe/Warsaw'))
-                ->where('status', '!=', ReservationStatus::COMPLETED)
+            $now = Carbon::now('Europe/Warsaw');
+
+            $reservations = \App\Models\Reservation::where('end_time', '<=', $now)
+                ->where('status', '=', ReservationStatus::SCHEDULED)
                 ->get();
 
             foreach ($reservations as $reservation) {
-                $reservation->update(['status' => 'completed']);
+                $reservation->update(['status' => ReservationStatus::COMPLETED]);
             }
-        })->hourly();
+        })->everyMinute();
     }
 
     /**
