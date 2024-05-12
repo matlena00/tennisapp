@@ -41,7 +41,7 @@ Route::middleware('can:isAdmin')->group(function () {
 
     // Reservations
     Route::get('/reservations', [ReservationController::class, 'index'])
-        ->name('reservations.index');
+        ->name('admin.reservations.index');
     Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])
         ->name('reservations.edit');
 
@@ -82,7 +82,7 @@ Route::middleware('can:isAdmin')->group(function () {
 Route::middleware('can:isUser')->group(function () {
     // Reservations
     Route::get('/reservations/index', [ReservationController::class, 'index'])
-        ->name('reservations.index');
+        ->name('user.reservations.index');
 
     Route::get('/reserve/{court}', [ReservationController::class, 'create'])->name('reservations.create');
 
