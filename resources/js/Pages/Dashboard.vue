@@ -55,6 +55,10 @@ const translateSurface = (surface) => {
     };
     return surfaces[surface] || surface;
 };
+
+const formatDateTime = (datetime) => {
+    return datetime.slice(0, -3);
+}
 </script>
 
 <template>
@@ -72,13 +76,13 @@ const translateSurface = (surface) => {
                         <h3 class="text-3xl mb-8">{{ court.name }} </h3>
                         <div v-if="court.currentReservation" class="flex flex-col gap-y-2 justify-center">
                             <p>Aktualnie gra: {{ court.currentReservation.user_name }}</p>
-                            <p>Od: {{ court.currentReservation.start_time }} </p>
-                            <p>Do: {{ court.currentReservation.end_time }}</p>
+                            <p>Od: {{ formatDateTime(court.currentReservation.start_time) }} </p>
+                            <p>Do: {{ formatDateTime(court.currentReservation.end_time) }}</p>
                         </div>
                         <div v-else-if="court.nextReservation" class="flex flex-col gap-y-2 justify-center mb-4">
                             <p>Następna rezerwacja: {{ court.nextReservation.name }}</p>
-                            <p>Od: {{ court.nextReservation.start_time }} </p>
-                            <p>Do: {{ court.nextReservation.end_time }}</p>
+                            <p>Od: {{ formatDateTime(court.nextReservation.start_time) }} </p>
+                            <p>Do: {{ formatDateTime(court.nextReservation.end_time) }}</p>
                         </div>
                         <div v-else class="text-center">
                             <p>Kort jest obecnie dostępny</p>
@@ -116,14 +120,14 @@ const translateSurface = (surface) => {
                                 <td>
                                     <div class="flex items-center px-6 py-4 focus:text-indigo-500">
                                         <div v-if="reservation.start_time">
-                                            {{ reservation.start_time }}
+                                            {{ formatDateTime(reservation.start_time) }}
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="flex items-center px-6 py-4 focus:text-indigo-500">
                                         <div v-if="reservation.end_time">
-                                            {{ reservation.end_time }}
+                                            {{ formatDateTime(reservation.end_time) }}
                                         </div>
                                     </div>
                                 </td>
@@ -156,7 +160,7 @@ const translateSurface = (surface) => {
                             {{ upcomingReservation.date }}
                         </span>
                             <span class="block text-center bg-secondary rounded-full text-accent3 w-fit px-4 py-2">
-                            {{ upcomingReservation.start_time }} - {{ upcomingReservation.end_time }}
+                            {{ formatDateTime(upcomingReservation.start_time) }} - {{ formatDateTime(upcomingReservation.end_time) }}
                         </span>
                             <span class="block text-center bg-accent2 rounded-full text-white w-fit px-4 py-2">Kort: {{upcomingReservation.court_name}}</span>
                         </div>

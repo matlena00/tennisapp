@@ -20,6 +20,10 @@ const translateSurface = (surface) => {
     };
     return surfaces[surface] || 'Nieznana';
 };
+
+const formatDateTime = (datetime) => {
+    return datetime.slice(0, -3);
+}
 </script>
 
 <template>
@@ -64,14 +68,14 @@ const translateSurface = (surface) => {
                     <td>
                         <Link class="flex items-center px-6 py-4 focus:text-indigo-500"  :href="`/reservations/${reservation.id}/edit`">
                             <div v-if="reservation.start_time">
-                                {{ reservation.start_time }}
+                                {{ formatDateTime(reservation.start_time) }}
                             </div>
                         </Link>
                     </td>
                     <td>
                         <Link class="flex items-center px-6 py-4 focus:text-indigo-500"  :href="`/reservations/${reservation.id}/edit`">
                             <div v-if="reservation.end_time">
-                                {{ reservation.end_time }}
+                                {{ formatDateTime(reservation.end_time) }}
                             </div>
                         </Link>
                     </td>
@@ -86,8 +90,8 @@ const translateSurface = (surface) => {
                           class="flex flex-col w-full px-6 py-4 rounded-md text-white opacity-85 hover:opacity-100 h-full">
                         <h3 class="font-bold text-2xl mb-2">{{court.name}}</h3>
                         <p class="mb-4">{{court.description}}</p>
-                        <p class="">Otwarcie: {{court.opening_time}}</p>
-                        <p class="">Zamknięcie: {{court.closing_time}}</p>
+                        <p class="">Otwarcie: {{ formatDateTime(court.opening_time) }}</p>
+                        <p class="">Zamknięcie: {{ formatDateTime(court.closing_time) }}</p>
                         <span class="p-4 mt-3 text-white bg-primary w-fit rounded-md">Cena za 1h: {{court.hourly_rate}} zł</span>
                     </Link>
                 </div>
