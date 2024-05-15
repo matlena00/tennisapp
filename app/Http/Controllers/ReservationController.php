@@ -67,8 +67,17 @@ class ReservationController extends Controller
             'equipment' => 'sometimes|array'
         ]);
 
+        // Check if the reservation for the given data exists in the system
+        $existingReservation = Reservation::where('court_id', $validatedData['court_id'])
+            ->where('start_time', $validatedData['start_time'])
+            ->where('end_time', $validatedData['end_time'])
+            ->exists();
+
+        if ($existingReservation) {
+            return redirect()->back()->with('error', 'Rezerwacja na ten czas już istnieje.');
+        }
+
         $reservation = Reservation::create($validatedData);
-        $court = Court::find($validatedData['court_id']);
 
         if (isset($validatedData['equipment']) && !empty($validatedData['equipment'])) {
             foreach ($validatedData['equipment'] as $equipmentData) {
