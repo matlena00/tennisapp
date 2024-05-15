@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ReservationStatus;
+use App\Mail\ReservationCanceled;
 use App\Mail\ReservationConfirmed;
 use App\Models\Court;
 use App\Models\Reservation;
@@ -46,13 +47,14 @@ class ReservationController extends Controller
         return Inertia::render('Reservations/Edit', ['reservation' => $reservation]);
     }
 
-    public function confirm($court_id, $start, $end) {
+    public function confirm($court_id, $start, $end, $total_price) {
         $court = Court::findOrFail($court_id);
 
         return Inertia::render('Reservations/Confirm', [
             'court' => $court,
             'start_time' => $start,
-            'end_time' => $end
+            'end_time' => $end,
+            'total_price' => $total_price
         ]);
     }
 
@@ -63,8 +65,9 @@ class ReservationController extends Controller
             'user_id' => 'required|integer|exists:users,id',
             'start_time' => 'required|date_format:Y-m-d H:i:s',
             'end_time' => 'required|date_format:Y-m-d H:i:s|after:start_time',
-            'sometimes|string|in:' . implode(',', ReservationStatus::STATUSES),
-            'equipment' => 'sometimes|array'
+            'status' => 'sometimes|string|in:' . implode(',', ReservationStatus::STATUSES),
+            'equipment' => 'sometimes|array',
+            'total_price' => 'required|numeric|min:0'
         ]);
 
         // Check if the reservation for the given data exists in the system
@@ -92,7 +95,7 @@ class ReservationController extends Controller
             Log::error('Wysyłanie maila nie powiodło się: ' . $e->getMessage());
         }
 
-        return redirect()->route('dashboard');
+        return $reservation;
     }
 
     public function cancel($id)
@@ -104,6 +107,14 @@ class ReservationController extends Controller
         if ($startDateTime->gt($today)) {
             $reservation->status = ReservationStatus::CANCELED;
             $reservation->save();
+
+            // Send cancellation email
+            try {
+                Mail::to($reservation->user->email)->send(new ReservationCanceled($reservation));
+            } catch (\Exception $e) {
+                Log::error('Wysyłanie maila nie powiodło się: ' . $e->getMessage());
+            }
+
             return redirect()->route('dashboard')->with('success', 'Rezerwacja została anulowana.');
         } else {
             return redirect()->route('dashboard')->withErrors('Nie można anulować rezerwacji w dniu jej rozpoczęcia.');

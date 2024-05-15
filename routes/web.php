@@ -95,7 +95,7 @@ Route::middleware('can:isUser')->group(function () {
 
     Route::get('/reserve/{court}', [ReservationController::class, 'create'])->name('reservations.create');
 
-    Route::get('/reservation/confirm/{court}/{start}/{end}', [ReservationController::class, 'confirm'])->name('reservation.confirm');
+    Route::get('/reservation/confirm/{court}/{start}/{end}/{total_price}', [ReservationController::class, 'confirm'])->name('reservation.confirm');
 
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 

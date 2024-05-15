@@ -10,7 +10,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['court_id', 'start_time', 'end_time', 'user_id', 'status']; // Make sure 'status' is fillable if it needs to be explicitly set sometimes.
+    protected $fillable = ['court_id', 'start_time', 'end_time', 'user_id', 'status', 'total_price'];
     protected $casts = [
         'start_time' => 'datetime:Y-m-d H:i:s',
         'end_time' => 'datetime:Y-m-d H:i:s',

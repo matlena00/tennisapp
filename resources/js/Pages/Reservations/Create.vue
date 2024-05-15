@@ -34,7 +34,13 @@ const reservationConfirmation = (clickInfo) => {
     const { startStr: start, endStr: end } = clickInfo.event;
     const courtId = props.court.id;
 
-    window.location.href = `/reservation/confirm/${courtId}/${start}/${end}`;
+    const startTime = moment(start);
+    const endTime = moment(end);
+    const duration = endTime.diff(startTime, 'hours', true);
+
+    const totalPrice = duration * props.court.hourly_rate;
+
+    window.location.href = `/reservation/confirm/${courtId}/${start}/${end}/${totalPrice.toFixed(2)}`;
 }
 
 const calendarOptions = ref({
