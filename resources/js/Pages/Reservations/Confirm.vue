@@ -56,6 +56,8 @@ const loadAvailableEquipments = async () => {
 };
 
 const finalizeReservation = () => {
+    const reservationDurationHours = moment(form.value.end_time).diff(moment(form.value.start_time), 'hours', true);
+
     form.value.equipment = availableEquipment.value.filter(equip => equip.selectedQuantity > 0)
         .map(equip => ({
             id: equip.id,
@@ -64,7 +66,7 @@ const finalizeReservation = () => {
         }));
 
     const equipmentTotal = form.value.equipment.reduce((total, equip) => {
-        return total + (equip.quantity * equip.rate);
+        return total + (equip.quantity * equip.rate * reservationDurationHours);
     }, 0);
 
     form.value.total = parseFloat(props.total_price) + equipmentTotal;
@@ -110,14 +112,16 @@ const decrement = (equipment) => {
 };
 
 const totalPrice = computed(() => {
+    const reservationDurationHours = moment(form.value.end_time).diff(moment(form.value.start_time), 'hours', true);
     return availableEquipment.value.reduce((total, equip) => {
-        return total + (equip.selectedQuantity * equip.hourly_rate);
+        return total + (equip.selectedQuantity * equip.hourly_rate * reservationDurationHours);
     }, 0);
 });
 
 const removeItem = (equipment) => {
-    form.value.total -= equipment.hourly_rate * equipment.selectedQuantity;
-    console.log(equipment.hourly_rate * equipment.selectedQuantity);
+    const reservationDurationHours = moment(form.value.end_time).diff(moment(form.value.start_time), 'hours', true);
+    form.value.total -= equipment.hourly_rate * equipment.selectedQuantity * reservationDurationHours;
+    console.log(equipment.hourly_rate * equipment.selectedQuantity * reservationDurationHours);
     equipment.selectedQuantity = 0;
 };
 </script>
@@ -132,15 +136,18 @@ const removeItem = (equipment) => {
             <div class="flex flex-col gap-2 p-6">
                 <input v-model="form.name" class="pr-6 w-full rounded-md border-b border-gray-800 text-gray-800" label="Name" readonly />
                 <div class="flex justify-between gap-x-8">
-                    <input v-model="form.start_time" class="text-gray-800 w-full" type="datetime-local" label="Opening Time" readonly>
-                    <input v-model="form.end_time" class="text-gray-800 w-full" type="datetime-local" label="Closing Time" readonly>
+                    <input v-model="form.start_time" class="text-gray-800 w-full rounded-md" type="datetime-local" label="Opening Time" readonly>
+                    <input v-model="form.end_time" class="text-gray-800 w-full rounded-md" type="datetime-local" label="Closing Time" readonly>
                 </div>
                 <div>
-                    <span>Łączna suma: {{ form.total }} zł</span> <!-- Zaktualizowane pole -->
+                    <span class="block px-3 py-2 rounded-lg bg-secondary w-fit">Łączna suma: {{ form.total }} zł</span>
                 </div>
                 <div class="flex justify-between">
-                    <Link href="/reservations/index" class="mt-4 bg-accent3 text-secondary font-bold w-fit py-2 px-4 rounded-lg hover:underline">Anuluj</Link>
-                    <button class="mt-4 bg-secondary text-accent3 w-fit py-2 px-4 rounded-lg font-bold hover:underline">Rezerwuj</button>
+                    <div class="flex gap-4">
+                        <Link href="/reservations/index" class="mt-4 bg-accent3 text-secondary font-bold w-fit py-2 px-4 rounded-lg hover:underline">Anuluj</Link>
+                        <button class="mt-4 bg-secondary text-accent3 w-fit py-2 px-4 rounded-lg font-bold hover:underline">Rezerwuj</button>
+                    </div>
+                    <div @click="loadAvailableEquipments" v-if="availableEquipment.length < 1" class="mt-4 bg-accent1 text-white font-bold w-fit py-2 px-4 rounded-lg hover:underline">Dodaj sprzęt</div>
                 </div>
                 <div v-if="availableEquipment.length > 0">
                     <span v-show="availableEquipment.length <= 0" class="block my-3 font-bold text-xl">Dodatkowy sprzęt:</span>
@@ -165,7 +172,7 @@ const removeItem = (equipment) => {
                         </div>
                     </div>
                 </div>
-                <div @click="loadAvailableEquipments" v-if="availableEquipment.length < 1" class="mt-4 bg-secondary text-accent3 font-bold w-fit py-2 px-4 rounded-lg hover:underline">Dodaj sprzęt</div>
+
             </div>
         </form>
     </MainContent>

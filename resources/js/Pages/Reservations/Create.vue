@@ -1,22 +1,22 @@
 <script setup>
-import {defineProps, onMounted, ref, watch} from 'vue';
+import { defineProps, onMounted, ref, watch } from 'vue';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Aside from "@/Layouts/Aside.vue";
-import MainContent from "@/Components/MainContent.vue";
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
+import MainContent from '@/Components/MainContent.vue';
+import FullCalendar from '@fullcalendar/vue3';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment';
 
 const props = defineProps({
-    court: Array,
-})
+    court: Object,
+});
 
 const today = new Date().toISOString().slice(0, 10);
 
-const showAvailableSlots = () => {
+const showOccupiedSlots = () => {
     axios.get(`/courts/${props.court.id}/slots`)
         .then(response => {
             if (response.data) {
@@ -24,24 +24,21 @@ const showAvailableSlots = () => {
             }
         })
         .catch(error => {
-            console.error('Error fetching available slots:', error);
+            console.error('Error fetching occupied slots:', error);
         });
-}
+};
 
 const events = ref([]);
 
-const reservationConfirmation = (clickInfo) => {
-    const { startStr: start, endStr: end } = clickInfo.event;
+const reservationConfirmation = (start, end) => {
     const courtId = props.court.id;
-
-    const startTime = moment(start);
-    const endTime = moment(end);
-    const duration = endTime.diff(startTime, 'hours', true);
-
+    const startTime = moment(start).format('YYYY-MM-DDTHH:mm:ss');
+    const endTime = moment(end).format('YYYY-MM-DDTHH:mm:ss');
+    const duration = moment(end).diff(moment(start), 'hours', true);
     const totalPrice = duration * props.court.hourly_rate;
 
-    window.location.href = `/reservation/confirm/${courtId}/${start}/${end}/${totalPrice.toFixed(2)}`;
-}
+    window.location.href = `/reservation/confirm/${courtId}/${startTime}/${endTime}/${totalPrice.toFixed(2)}`;
+};
 
 const calendarOptions = ref({
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -60,11 +57,30 @@ const calendarOptions = ref({
         minute: '2-digit',
         hour12: false
     },
-
     selectable: true,
+    contentHeight: 'auto',
+    selectConstraint: {
+        start: moment().startOf('hour').add(1, 'hour').toISOString(), // Ograniczenie wyboru do przyszłych godzin od następnej pełnej godziny
+    },
+    validRange: {
+        start: moment().startOf('hour').add(1, 'hour').toISOString(), // Ograniczenie wyświetlania do przyszłych godzin od następnej pełnej godziny
+    },
+    select: function(info) {
+        const start = moment(info.startStr).format('HH:mm');
+        const end = moment(info.endStr).format('HH:mm');
+
+        if (confirm('Czy na pewno chcesz kontynuować rezerwację kortu w godzinach: ' + start + ' - ' + end + ' ?')) {
+            reservationConfirmation(info.startStr, info.endStr);
+        }
+    },
     eventClick: function(clickInfo) {
-        reservationConfirmation(clickInfo);
-        console.log(clickInfo.event._instance.range);
+        const start = clickInfo.event.start;
+        const end = clickInfo.event.end;
+
+        reservationConfirmation(start, end);
+    },
+    eventClassNames: function() {
+        return ['custom-event-class'];
     }
 });
 
@@ -73,7 +89,7 @@ watch(events, (newEvents) => {
 }, { deep: true });
 
 onMounted(() => {
-    showAvailableSlots();
+    showOccupiedSlots();
 });
 </script>
 
@@ -91,4 +107,5 @@ onMounted(() => {
 .fc {
     max-height: 100%;
 }
+
 </style>

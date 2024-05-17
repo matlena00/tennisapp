@@ -83,24 +83,14 @@ class CourtController extends Controller
 
         $existingReservations = $court->reservations()->whereBetween('start_time', [$startPeriod, $endPeriod])->get();
 
-        for ($day = 0; $day < 14; $day++) {
-            $date = now()->addDays($day)->format('Y-m-d');
-            for ($hour = $openingHour; $hour < $closingHour; $hour++) {
-                $startTime = Carbon::parse(sprintf('%s %02d:00:00', $date, $hour));
-                $endTime = Carbon::parse(sprintf('%s %02d:00:00', $date, $hour + 1));
-
-                $isOverlapping = $existingReservations->some(function ($reservation) use ($startTime, $endTime) {
-                    return $startTime->lt(new Carbon($reservation->end_time)) && $endTime->gt(new Carbon($reservation->start_time));
-                });
-
-                if (!$isOverlapping) {
-                    $events[] = [
-                        'title' => 'Rezerwuj',
-                        'start' => $startTime->toDateTimeString(),
-                        'end' => $endTime->toDateTimeString(),
-                    ];
-                }
-            }
+        foreach ($existingReservations as $reservation) {
+            $events[] = [
+                'title' => 'Zajęte',
+                'start' => $reservation->start_time,
+                'end' => $reservation->end_time,
+                'backgroundColor' => '#ff0000',
+                'borderColor' => '#ff0000',
+            ];
         }
 
         return response()->json($events);
