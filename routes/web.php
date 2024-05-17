@@ -90,19 +90,36 @@ Route::middleware('can:isUser')->group(function () {
     Route::get('/reservations/index', [ReservationController::class, 'index'])
         ->name('user.reservations.index');
 
-    Route::get('/my-reservations', [ReservationController::class, 'myReservations'])->name('my.reservations');
+    Route::get('/my-reservations', [ReservationController::class, 'myReservations'])
+        ->name('my.reservations');
 
+    Route::get('/reserve/{court}', [ReservationController::class, 'create'])
+        ->name('reservations.create');
 
-    Route::get('/reserve/{court}', [ReservationController::class, 'create'])->name('reservations.create');
+    Route::get('/reservation/confirm/{court}/{start}/{end}/{total_price}', [ReservationController::class, 'confirm'])
+        ->name('reservation.confirm');
 
-    Route::get('/reservation/confirm/{court}/{start}/{end}/{total_price}', [ReservationController::class, 'confirm'])->name('reservation.confirm');
-
-    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::post('/reservations', [ReservationController::class, 'store'])
+        ->name('reservations.store');
 
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])
         ->name('reservations.destroy');
 
-    Route::post('/reservations/{id}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+    Route::post('/reservations/{id}/cancel', [ReservationController::class, 'cancel'])
+        ->name('reservations.cancel');
+
+    Route::get('/add-equipment', [ReservationController::class, 'showEquipment'])
+        ->name('show.equipment');
+
+    Route::get('/select-reservation', [ReservationController::class, 'selectReservation'])
+        ->name('select.reservation');
+
+    Route::get('/reservations/{id}/add-equipment', [ReservationController::class, 'showEquipmentForm'])
+        ->name('reservations.showEquipmentForm');
+
+// Route to handle the form submission
+    Route::post('/reservations/{id}/add-equipment', [ReservationController::class, 'storeEquipment'])
+        ->name('reservations.addEquipment');
 
 
     // Courts
@@ -114,7 +131,8 @@ Route::middleware('can:isUser')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])

@@ -20,7 +20,7 @@ import {Link} from "@inertiajs/vue3";
             </Link>
             <Link
                 v-if="$page.props.auth.user.role == 'user'"
-                href="#"
+                href="/add-equipment"
                 class="text-white rounded-md hover:bg-secondary p-2"
             >
                 Wypożycz sprzęt

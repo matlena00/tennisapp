@@ -13,7 +13,7 @@ const props = defineProps({
     start_time: String,
     end_time: String,
     user_id: Number,
-    total_price: Number // Nowy parametr
+    total_price: Number
 });
 
 const user = usePage().props.auth.user;
@@ -24,7 +24,7 @@ const form = ref({
     user_id: user.id,
     user_email: user.email,
     equipment: [],
-    total: props.total_price // Inicjalizacja z wartością total_price
+    total: props.total_price
 });
 
 console.log(form.value.total);
@@ -186,10 +186,10 @@ const removeItem = (equipment) => {
                     <div class="h-full flex flex-col justify-center content-center items-center p-2 gap-y-2">
                         <div class="flex gap-x-2 content-center items-center">
                             <button @click.stop="decrement(equip)" class="px-3 py-1 bg-secondary text-white h-8 w-8 rounded-full">-</button>
-                            <input v-model="equip.selectedQuantity" class="text-center w-10 rounded-md" readonly>
+                            <input v-model="equip.selectedQuantity" class="text-center w-16 rounded-md text-gray-800" type="number" min="0" :max="equip.available_quantity">
                             <button @click.stop="increment(equip)" class="px-3 py-1 bg-accent3 text-white h-8 w-8 rounded-full">+</button>
                         </div>
-                        <span class="text-accent3 font-bold">{{ equip.name }}</span>
+                        <span class="text-accent3 font-bold">{{ equip.name }} (dostępnych: {{equip.available_quantity}})</span>
                         <div class="flex justify-around w-full">
                             <span class="text-white">1 szt: {{ equip.hourly_rate }} zł</span>
                             <span class="text-white">suma: {{ equip.selectedQuantity * equip.hourly_rate }} zł</span>
@@ -198,7 +198,7 @@ const removeItem = (equipment) => {
                 </div>
             </div>
             <div class="total-cost mt-4 p-4 border-t">
-                <h3 class="text-lg font-bold text-accent3">Całkowita suma za sprzęt: {{ totalPrice }} zł</h3>
+                <h3 class="text-lg font-bold text-accent3">Całkowita suma za sprzęt * ilość h rezerwacji: {{ totalPrice }} zł</h3>
                 <button @click.stop="finalizeReservation" class="mt-4 bg-accent1 text-white px-4 py-2 rounded-lg">Dodaj sprzęt</button>
             </div>
         </div>

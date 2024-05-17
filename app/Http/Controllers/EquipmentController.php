@@ -39,11 +39,34 @@ class EquipmentController extends Controller
         $start_date = $request->start_time;
         $end_date = $request->end_time;
 
-        $availableEquipments = Equipment::whereDoesntHave('reservation', function ($query) use ($start_date, $end_date) {
-            $query->whereBetween('start_time', [$start_date, $end_date])
-                ->orWhereBetween('end_time', [$start_date, $end_date]);
-        })->get();
+        $equipments = Equipment::with(['reservations' => function($query) use ($start_date, $end_date) {
+            $query->where(function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('start_time', [$start_date, $end_date])
+                    ->orWhereBetween('end_time', [$start_date, $end_date])
+                    ->orWhere(function ($query) use ($start_date, $end_date) {
+                        $query->where('start_time', '<=', $start_date)
+                            ->where('end_time', '>=', $end_date);
+                    });
+            });
+        }])->get();
 
-        return response()->json($availableEquipments);
+        $availableEquipments = $equipments->map(function ($equipment) {
+            $reservedQuantity = $equipment->reservations->sum('pivot.quantity');
+            $availableQuantity = $equipment->quantity - $reservedQuantity;
+
+            return [
+                'id' => $equipment->id,
+                'name' => $equipment->name,
+                'description' => $equipment->description,
+                'hourly_rate' => $equipment->hourly_rate,
+                'available_quantity' => $availableQuantity,
+            ];
+        });
+
+        $availableEquipments = $availableEquipments->filter(function ($equipment) {
+            return $equipment['available_quantity'] > 0;
+        });
+
+        return response()->json($availableEquipments->values());
     }
 }

@@ -6,10 +6,12 @@ use App\Enums\ReservationStatus;
 use App\Mail\ReservationCanceled;
 use App\Mail\ReservationConfirmed;
 use App\Models\Court;
+use App\Models\Equipment;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -131,10 +133,67 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function destroy(Reservation $reservation)
+    public function showEquipment()
     {
-        $reservation->delete();
+        $equipment = Equipment::all();
+        return Inertia::render('Reservations/ShowEquipment', [
+            'equipment' => $equipment,
+        ]);
+    }
 
-        return redirect()->route('dashboard');
+    public function selectReservation()
+    {
+        $user = auth()->user();
+        $futureReservations = Reservation::where('user_id', $user->id)
+            ->where('start_time', '>', now())
+            ->with('court')
+            ->get();
+
+        return Inertia::render('Reservations/AddEquipmentToReservation', [
+            'reservations' => $futureReservations
+        ]);
+    }
+
+    public function showEquipmentForm($id)
+    {
+        $reservation = Reservation::with('court')->findOrFail($id);
+        $start_time = $reservation->start_time;
+        $end_time = $reservation->end_time;
+
+        $allEquipment = Equipment::all();
+
+        $overlappingReservations = DB::table('reservation_equipment')
+            ->join('reservations', 'reservation_equipment.reservation_id', '=', 'reservations.id')
+            ->where(function ($query) use ($start_time, $end_time) {
+                $query->where('reservations.start_time', '<', $end_time)
+                    ->where('reservations.end_time', '>', $start_time);
+            })
+            ->pluck('reservation_equipment.equipment_id');
+
+        $availableEquipment = $allEquipment->filter(function ($equipment) use ($overlappingReservations) {
+            return !$overlappingReservations->contains($equipment->id);
+        });
+
+        return Inertia::render('Reservations/AddEquipmentForm', [
+            'reservation' => $reservation,
+            'equipment' => $availableEquipment->values(), // Przekazywanie tablicy
+        ]);
+    }
+
+    public function storeEquipment(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'equipment' => 'required|array',
+            'equipment.*.id' => 'required|integer|exists:equipment,id',
+            'equipment.*.quantity' => 'required|integer|min:1',
+        ]);
+
+        $reservation = Reservation::findOrFail($id);
+
+        foreach ($validatedData['equipment'] as $equipmentData) {
+            $reservation->equipments()->attach($equipmentData['id'], ['quantity' => $equipmentData['quantity']]);
+        }
+
+        return redirect()->route('dashboard')->with('success', 'Sprzęt został dodany do rezerwacji.');
     }
 }
