@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReservationStatus;
 use App\Models\Court;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -74,14 +75,14 @@ class CourtController extends Controller
 
     public function slots(Request $request, Court $court)
     {
-        $openingHour = Carbon::createFromFormat('H:i:s', $court->opening_time)->hour;
-        $closingHour = Carbon::createFromFormat('H:i:s', $court->closing_time)->hour;
-
         $startPeriod = now();
         $endPeriod = now()->addWeeks(2);
         $events = [];
 
-        $existingReservations = $court->reservations()->whereBetween('start_time', [$startPeriod, $endPeriod])->get();
+        $existingReservations = $court->reservations()
+            ->whereBetween('start_time', [$startPeriod, $endPeriod])
+            ->where('status', '!=', ReservationStatus::CANCELED)
+            ->get();
 
         foreach ($existingReservations as $reservation) {
             $events[] = [

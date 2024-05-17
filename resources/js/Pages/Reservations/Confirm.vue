@@ -27,8 +27,6 @@ const form = ref({
     total: props.total_price
 });
 
-console.log(form.value.total);
-
 const availableEquipment = ref([]);
 const isSubmitting = ref(false);
 const modalOpen = ref(false);
@@ -198,7 +196,7 @@ const removeItem = (equipment) => {
                 </div>
             </div>
             <div class="total-cost mt-4 p-4 border-t">
-                <h3 class="text-lg font-bold text-accent3">Całkowita suma za sprzęt * ilość h rezerwacji: {{ totalPrice }} zł</h3>
+                <h3 class="text-lg font-bold text-accent3">Całkowita suma za sprzęt (razy liczba godzin rezerwacji): {{ totalPrice }} zł</h3>
                 <button @click.stop="finalizeReservation" class="mt-4 bg-accent1 text-white px-4 py-2 rounded-lg">Dodaj sprzęt</button>
             </div>
         </div>

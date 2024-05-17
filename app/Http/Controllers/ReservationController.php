@@ -168,15 +168,30 @@ class ReservationController extends Controller
                 $query->where('reservations.start_time', '<', $end_time)
                     ->where('reservations.end_time', '>', $start_time);
             })
-            ->pluck('reservation_equipment.equipment_id');
+            ->select('reservation_equipment.equipment_id', 'reservation_equipment.quantity')
+            ->get();
 
-        $availableEquipment = $allEquipment->filter(function ($equipment) use ($overlappingReservations) {
-            return !$overlappingReservations->contains($equipment->id);
+        $equipmentQuantities = $overlappingReservations->groupBy('equipment_id')->map(function ($group) {
+            return $group->sum('quantity');
+        });
+
+        $availableEquipment = $allEquipment->map(function ($equipment) use ($equipmentQuantities) {
+            $reservedQuantity = $equipmentQuantities->get($equipment->id, 0);
+            $availableQuantity = $equipment->quantity - $reservedQuantity;
+
+            return [
+                'id' => $equipment->id,
+                'name' => $equipment->name,
+                'description' => $equipment->description,
+                'hourly_rate' => $equipment->hourly_rate,
+                'total_quantity' => $equipment->quantity,
+                'available_quantity' => $availableQuantity,
+            ];
         });
 
         return Inertia::render('Reservations/AddEquipmentForm', [
             'reservation' => $reservation,
-            'equipment' => $availableEquipment->values(), // Przekazywanie tablicy
+            'equipment' => $availableEquipment->values(),
         ]);
     }
 
