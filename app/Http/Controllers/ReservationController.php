@@ -107,6 +107,8 @@ class ReservationController extends Controller
         $today = Carbon::today();
 
         if ($startDateTime->gt($today)) {
+            $reservation->equipments()->detach();
+
             $reservation->status = ReservationStatus::CANCELED;
             $reservation->save();
 
