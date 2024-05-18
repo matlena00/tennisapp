@@ -43,7 +43,7 @@
     <p>Dziękujemy za skorzystanie z naszych usług i zapraszamy ponownie.</p>
     <div class="footer">
         Pozdrawiamy,<br>
-        TENNISO
+        TENISSO
     </div>
 </div>
 </body>

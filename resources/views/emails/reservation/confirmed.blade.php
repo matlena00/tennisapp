@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twoja rezerwacja w aplikacji TENISSO</title>
+    <title>Potwierdzenie rezerwacji w TENISSO</title>
     <style>
         body {
             background-color: #f8f8f8;
@@ -20,8 +20,9 @@
             max-width: 800px;
             color: #ffffff;
         }
-        h2 {
+        h1 {
             margin-bottom: 20px;
+            color: #ffffff;
         }
         p {
             margin: 10px 0;
@@ -43,8 +44,9 @@
 </head>
 <body>
 <div class="container">
-    <h2>Rezerwacja #{{$reservation->id}}</h2>
-    <p>Twoja rezerwacja #{{$reservation->id}} została potwierdzona. Poniżej znajdziesz jej szczegóły.</p>
+    <h1>Rezerwacja #{{$reservation->id}} potwierdzona.</h1>
+    <p>Drogi użytkowniku, <br>
+        twoja rezerwacja #{{$reservation->id}} została potwierdzona. Poniżej znajdziesz jej szczegóły.</p>
     <p>Aby anulować rezerwację przejdź do panelu i odszukaj zakładki "Moje rezerwacje". Następnie postępuj zgodnie z informacjami pojawiającymi się na ekranie.</p>
     <p>Czekamy na Ciebie z niecierpliwością.</p>
 

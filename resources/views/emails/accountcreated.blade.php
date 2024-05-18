@@ -39,9 +39,10 @@
     <h1>Witaj, {{$user->name}}</h1>
     <p>Dziękujemy za rejestrację! Już teraz możesz zarezerwować interesujący Cię kort!</p>
     <p>Aby zmienić swoje dane logowania przejdź do zakładki <strong>Profil</strong>. Jeśli chcesz dokonać rezerwacji, musisz przejść pod zakładkę <strong>Rezerwuj kort</strong>.</p>
-    <p>Nie możemy się doczekać Twojej pierwszej rezerwacji! Czekamy na Ciebie z niecierpliwością.</p>
+    <p>Nie możemy się doczekać Twojej pierwszej rezerwacji!</p>
     <div class="footer">
-        Dziękujemy za zaufanie i do zobaczenia na korcie!
+        Do zobaczenia na korcie! <br>
+        TENISSO
     </div>
 </div>
 </body>
