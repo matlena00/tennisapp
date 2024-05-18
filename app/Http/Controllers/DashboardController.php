@@ -65,6 +65,7 @@ class DashboardController extends Controller
 
             $upcomingReservation = $allReservations
                 ->where('start_time', '>', $now)
+                ->where('status', '=', ReservationStatus::SCHEDULED)
                 ->sortBy('start_time')
                 ->first();
 

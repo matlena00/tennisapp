@@ -10,7 +10,7 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            color: #ffffff;
+            color: #ffffff!important;
         }
         .container {
             background-color: #204934;
@@ -28,6 +28,10 @@
         p {
             font-size: 18px;
             margin: 10px 0;
+            color: #ffffff!important;
+        }
+        .im p {
+            color: #fff!important;
         }
         .footer {
             font-size: 0.9em;

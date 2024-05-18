@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <nav class="bg-primary h-16 p-4 flex justify-between border-b border-b-white">
+    <nav class="bg-primary h-16 p-4 flex justify-between">
         <div class="flex gap-4">
             <Link :href="route('welcome')"
             class="flex flex-row gap-3 items-center">
@@ -27,9 +27,9 @@ import { Link } from '@inertiajs/vue3';
             </Link>
         </div>
     </nav>
-    <div class="h-[calc(100vh-64px)] flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-primary">
+    <div class="h-[calc(100vh-64px)] flex flex-col justify-center px-8 items-center pt-6 sm:pt-0 bg-secondary">
         <div
-            class="w-full sm:max-w-lg px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
+            class="w-full sm:max-w-lg px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg"
         >
             <slot />
         </div>

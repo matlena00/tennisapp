@@ -7,7 +7,7 @@
     <style>
         body {
             background-color: #f8f8f8;
-            color: #fff;
+            color: #fff!important;
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
@@ -29,6 +29,10 @@
         p {
             font-size: 18px;
             margin: 10px 0;
+            color: #ffffff!important;
+        }
+        .im p {
+            color: #fff!important;
         }
         table {
             width: 100%;

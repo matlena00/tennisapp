@@ -148,6 +148,7 @@ class ReservationController extends Controller
         $user = auth()->user();
         $futureReservations = Reservation::where('user_id', $user->id)
             ->where('start_time', '>', now())
+            ->where('status', '=', ReservationStatus::SCHEDULED)
             ->with('court')
             ->get();
 

@@ -18,35 +18,46 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
         </div>
     </nav>
     <div class="grid grid-cols-1 overflow-y-auto items-center h-[calc(100vh-80px)] sm:grid-cols-2">
-        <div class="flex flex-col gap-y-8 bg-secondary h-full justify-center">
+        <div class="flex flex-col gap-y-4  sm:gap-y-8 bg-secondary h-full justify-center">
             <div class="w-3/4 self-center bg-secondary">
-                <span class="text-white text-5xl font-bold">
+                <span class="text-white text-xl md:text-3xl lg:text-5xl font-bold sm:hidden">
+                    Umiesz w paletki?
+                </span>
+
+                <span class="text-white text-xl md:text-3xl lg:text-5xl font-bold hidden sm:block">
                     Umiesz <br> w paletki?
                 </span>
+
             </div>
             <div class="w-3/4 self-center text-right   ">
-                <span class="text-accent3 text-5xl font-bold">
+                <span class="text-accent3 text-xl md:text-3xl lg:text-5xl font-bold sm:hidden">
+                    Spróbuj w tenis!
+                </span>
+                <span class="text-accent3 text-xl md:text-3xl lg:text-5xl font-bold hidden sm:block">
                     Spróbuj <br> w tenis!
                 </span>
             </div>
             <div class="w-3/4 self-center">
-                <span class="text-accent2 text-5xl font-bold">
+                <span class="text-accent2 text-xl md:text-3xl lg:text-5xl font-bold sm:hidden">
+                    Rezerwuj korty już dziś!
+                </span>
+                <span class="text-accent2 text-xl md:text-3xl lg:text-5xl font-bold hidden sm:block">
                     Rezerwuj korty <br> już dziś!
                 </span>
             </div>
         </div>
-        <div class="bg-accent3 h-full content-center">
+        <div class="bg-accent3 h-full content-center px-8">
             <div class="flex flex-col justify-center items-center">
-                <span class="text-secondary text-4xl mb-8">Witamy w aplikacji tenisso!</span>
+                <span class="text-accent1 text-2xl md:text-4xl mb-8 font-bold">Witaj w aplikacji tenisso!</span>
                 <div class="flex gap-x-6">
                     <Link
                         :href="route('login')"
-                        class="min-w-40 bg-accent1  text-center text-white text-2xl px-3 py-4 rounded-lg">
+                        class="w-fit bg-accent1 text-center text-white text-xl md:text-2xl px-4 py-2 rounded-lg">
                         Zaloguj się
                     </Link>
                     <Link
                         :href="route('register')"
-                        class="min-w-40 bg-secondary text-center text-white text-2xl px-3 py-4 rounded-lg">
+                        class="w-fit bg-secondary text-center text-white text-xl md:text-2xl px-4 py-2 rounded-lg">
                         Utwórz konto
                     </Link>
                 </div>
