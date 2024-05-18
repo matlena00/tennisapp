@@ -81,8 +81,8 @@ const formatDateTime = (datetime) => {
                             <p>Od: {{ formatDateTime(court.nextReservation.start_time) }} </p>
                             <p>Do: {{ formatDateTime(court.nextReservation.end_time) }}</p>
                         </div>
-                        <div v-else class="text-center">
-                            <p>Kort jest obecnie dostępny</p>
+                        <div v-else>
+                            <p>Brak przyszłych rezerwacji dla tego kortu.</p>
                         </div>
                     </div>
                 </div>
