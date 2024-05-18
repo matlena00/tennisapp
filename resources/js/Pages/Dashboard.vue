@@ -69,7 +69,7 @@ const formatDateTime = (datetime) => {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div v-for="court in courtsData" :key="court.id"
                          :class="{'grass': court.surface === 'grass', 'clay': court.surface === 'clay', 'hard': court.surface === 'hard'}"
-                         class="flex flex-col gap-y-3 justify-center text-white font-bold text-xl p-8 rounded-lg content-center">
+                         class="flex flex-col gap-y-3 text-white font-bold text-xl p-8 rounded-lg content-center">
                         <h3 class="text-xl mb-8">{{ court.name }} </h3>
                         <div v-if="court.currentReservation" class="flex flex-col gap-y-2 justify-center">
                             <p>Aktualnie gra: {{ court.currentReservation.user_name }}</p>
