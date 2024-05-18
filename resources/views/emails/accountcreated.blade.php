@@ -20,11 +20,14 @@
             max-width: 800px;
         }
         h1 {
+            font-size: 32px;
+            margin-top: 0;
             margin-bottom: 20px;
-            color: #fff;
+            color: #ffffff;
         }
         p {
-            margin: 10px 0 20px 0;
+            font-size: 18px;
+            margin: 10px 0;
         }
         .footer {
             font-size: 0.9em;

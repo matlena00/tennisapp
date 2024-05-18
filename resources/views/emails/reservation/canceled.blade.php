@@ -20,17 +20,34 @@
             max-width: 800px;
         }
         h1 {
+            font-size: 32px;
+            margin-top: 0;
             margin-bottom: 20px;
-            color: #fff;
+            color: #ffffff;
         }
         p {
-            margin: 10px 0 16px 0;
+            font-size: 18px;
+            margin: 10px 0;
         }
         .footer {
             font-size: 0.9em;
             color: #ccc;
             margin-top: 20px;
             text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #eee; /* Delikatny kontrastowy podział */
+            text-align: left; /* Wyrównanie tekstu do lewej */
+        }
+        th {
+            background-color: #276549; /* Nieco ciemniejszy niż tło kontenera */
+            color: #fff;
         }
     </style>
 </head>

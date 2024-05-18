@@ -21,10 +21,13 @@
             color: #ffffff;
         }
         h1 {
+            font-size: 32px;
+            margin-top: 0;
             margin-bottom: 20px;
             color: #ffffff;
         }
         p {
+            font-size: 18px;
             margin: 10px 0;
         }
         table {
@@ -34,10 +37,11 @@
         }
         th, td {
             padding: 10px;
-            border-bottom: 1px solid #eee; /* Delikatny kontrastowy podział */
+            border-bottom: 1px solid #eee;
+            text-align: left;
         }
         th {
-            background-color: #276549; /* Nieco ciemniejszy niż tło kontenera */
+            background-color: #276549;
             color: #fff;
         }
     </style>
@@ -62,7 +66,7 @@
         <tbody>
         <tr>
             <td>{{$court_name}}</td>
-            <td>{{$court_surface}}</td>
+            <td>{{ __('surfaces.' . $court_surface) }}</td>
             <td>{{$reservation->start_time}}</td>
             <td>{{$reservation->end_time}}</td>
         </tr>
