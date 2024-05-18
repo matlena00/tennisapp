@@ -21,9 +21,10 @@
         }
         h1 {
             margin-bottom: 20px;
+            color: #fff;
         }
         p {
-            margin: 10px 0 20px 0;
+            margin: 10px 0 16px 0;
         }
         .footer {
             font-size: 0.9em;
@@ -35,10 +36,11 @@
 </head>
 <body>
 <div class="container">
-    <h1>Rezerwacja Anulowana</h1>
-    <p>Drogi użytkowniku,</p>
-    <p>Twoja rezerwacja kortu <strong>{{ $court_name }}</strong> o numerze <strong>#{{ $reservation->id }}</strong> w dniu <strong>{{ $reservation->start_time }}</strong> została pomyślnie anulowana.</p>
-    <p>Dziękujemy za skorzystanie z naszych usług.</p>
+    <h1>Rezerwacja #{{ $reservation->id }} została anulowana</h1>
+    <p>Drogi użytkowniku, <br>
+        Twoja rezerwacja kortu <strong>{{ $court_name }}</strong> o numerze <strong>#{{ $reservation->id }}</strong> w dniu <strong>{{ $reservation->start_time }}</strong> została pomyślnie anulowana.
+    </p>
+    <p>Dziękujemy za skorzystanie z naszych usług i zapraszamy ponownie.</p>
     <div class="footer">
         Pozdrawiamy,<br>
         TENNISO

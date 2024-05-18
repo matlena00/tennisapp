@@ -19,17 +19,17 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
     </nav>
     <div class="grid grid-cols-1 overflow-y-auto items-center h-[calc(100vh-80px)] sm:grid-cols-2">
         <div class="flex flex-col gap-y-8 bg-secondary h-full justify-center">
-            <div class="w-6/12 self-center bg-secondary">
+            <div class="w-3/4 self-center bg-secondary">
                 <span class="text-white text-5xl font-bold">
                     Umiesz <br> w paletki?
                 </span>
             </div>
-            <div class="w-6/12 self-center text-right   ">
+            <div class="w-3/4 self-center text-right   ">
                 <span class="text-accent3 text-5xl font-bold">
                     Spróbuj <br> w tenis!
                 </span>
             </div>
-            <div class="w-6/12 self-center">
+            <div class="w-3/4 self-center">
                 <span class="text-accent2 text-5xl font-bold">
                     Rezerwuj korty <br> już dziś!
                 </span>
